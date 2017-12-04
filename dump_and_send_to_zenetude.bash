@@ -1,3 +1,4 @@
+#!/bin/bash 
 #Test : Dans la machine Scodoc7Demo.ova
 #Prod : Dans le serveur de l'IUT où est stocké scodoc
 
