@@ -1,0 +1,169 @@
+
+  <!DOCTYPE html>
+  <html>
+    
+<!-- Mirrored from mickael.martin-nevot.perso.luminy.univ-amu.fr/zenetude/php/view/index.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 04 Dec 2017 17:46:02 GMT -->
+<body>
+		
+					<head>
+		    	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+				<title>Accueil</title>
+
+				<link rel="icon" type="image/ico" href="../../img/favicon.ico" />
+
+				<!--Import Roboto Font-->
+		    	<link href='../../../../fonts.googleapis.com/cssaace.css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+				<!--Import Google Icon Font-->
+				<link href="../../../../fonts.googleapis.com/icone91f.css?family=Material+Icons" rel="stylesheet">
+				<!--Import materialize.css-->
+				<link type="text/css" rel="stylesheet" href="../../vendor/css/materialize.min.css"  media="screen,projection"/>
+				<!--Import style.css-->
+				<link type="text/css" rel="stylesheet" href="../../css/style.css"/>
+				<!--Import menu.css-->
+				<link type="text/css" rel="stylesheet" href="../../css/menu.css"/>
+				<!--Import profil.css-->
+				<link type="text/css" rel="stylesheet" href="../../css/profil.css"/>
+
+				<link rel="stylesheet" type="text/css" href="../../css/index.css"/>
+
+				<!-- CALENDAR -->
+			  	<link rel="stylesheet" href="../../css/clndr.css" type="text/css" />
+				<link type="text/css" rel="stylesheet" href="../../css/calendar.css"/>
+
+		     	 <!--Let browser know website is optimized for mobile-->
+		      	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+   			</head>
+						<nav id="nav">
+	 		 	<div class="nav-wrapper">
+				    <a href="index.html" class="brand-logo"><img class="logo-svg" src="../../img/logo.svg" alt="logo du site"></a>
+				    <a href="index.html" class="brand-logo-responsive"><img class="logo-svg" src="../../img/logo2.svg" alt="logo du site"></a>
+				    <img class="name-svg"  src="../../img/name.svg" alt="Zenetude, titre du site">
+		  		</div>
+			</nav>
+						<nav id="scroll-nav">
+		  		<div class="nav-wrapper">
+		    		<a href="index.html" class="brand-logo"><img src="../../img/logo.svg" alt="logo du site"></a>
+		    		<img class="name-svg" src="../../img/name.svg" alt="Zenetude, titre du site">
+		 	 	</div>
+			</nav>
+		        
+        <div id="filtre"></div>
+
+		<div class="container">
+        	<!-- Page Content goes here -->
+        	<div class="row row1">
+
+        	  	      	<div class="col s12 m8">
+	        	<div class="card-panel teal" id="bloc1">
+	        		<div class="card-header"> <h2>Accueil (Bêta)</h2></div>
+	          		<p>Bienvenue !<br/><br/>
+						Zenetude est un LMS (Learning Management System) qui vous accompagnera dans votre processus d'apprentissage car il permet à votre responsable de formation de vous diffuser des informations aux élèves.
+						<br/><br/>
+
+				</div>
+	      	</div>
+    
+						<div class="col s12 m4">
+		        <div class="card-panel teal" id="aside1">
+					<div class="card-header"> <h2>Connexion</h2></div>
+
+					<!-- Formulaire -->
+					<div class="formula">
+						<form id="formula" class="col s10 push-s1" action="http://mickael.martin-nevot.perso.luminy.univ-amu.fr/zenetude/php/view/connexion.php" method="POST">
+
+
+							<!-- Contenu card -->
+							<div>
+
+								<!-- email -->
+								<div class="row">
+									<div class="input-field col s12">
+										<input id="email" type="email" class="validate" name="mail">
+										<label for="email">Email</label>
+									</div>
+								</div><!-- fin email -->
+
+								<!-- mot de passe -->
+								<div class="row">
+									<div class="input-field col s12">
+										<input id="passe" type="password" class="validate" name="pass">
+										<label for="passe">Mot de passe</label>
+									</div>
+								</div><!-- fin mot de passe -->
+
+							</div><!-- Fin contenu card -->
+							<div id="result"></div><!-- Retour de l'erreur en json -->
+							<div class="card-action  center-align bouton-connection">
+								<input class="btn connexion" type="submit" value="Se connecter" />
+							</div>
+							<div id="socialmedia">
+								<img onclick="alert('Connexion à Facebook impossible');" src='../../img/FacebookLogo.png' alt='Se connecter avec Facebook'><img onclick="alert('Connexion à Twitter impossible');" src='../../img/TwitterLogo.png' alt='Se connecter avec Twitter'><a href="https://accounts.google.com/o/oauth2/auth?response_type=code&amp;redirect_uri=http%3A%2F%2Fzenetude.esy.es%2Fphp%2Fview%2Findex.php&amp;client_id=620733540979-q1jbsbprun39f54b3sh48rqops0pl1sq.apps.googleusercontent.com&amp;scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&amp;access_type=offline&amp;approval_prompt=force"><img src="../../img/googleLogo.png" alt="Se connecter avec Google+"></a>							</div>
+						</form>
+					</div>
+				    <!-- Fin formulaire -->
+			        <p class="connexion"><a href="inscription.html" class="left">S'inscrire</a><a href="recuperation.html" class="right">Mot de passe oublié</a></p>
+		      	</div>
+    		</div>
+					    </div>
+			<!--
+        	<div class="row">
+		      <div class="col s12 m8">
+		        <div class="card-panel teal" id="bloc2">
+		        	<div class="card-title"> <h3>Titre</h3></div>
+		          <p>I am a very simple card. I am good at containing small bits of information.
+		          I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.I am a very simple card. I am good at containing small bits of information.
+		          I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.I am a very simple card. I am good at containing small bits of information.
+		          I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.I am a very simple card. I am good at containing small bits of information.
+		          I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.
+		          </p>
+		        </div>
+		      </div>
+
+		         		</div>
+			-->
+
+    	</div>
+    	<!-- FIN CONTAINER -->
+
+ 					<footer>
+				<p>Licence Professionnelle Systèmes Informatiques et Logiciels et Développement et Administration Internet et Intranet.</p>
+			</footer>
+					<!--Import jQuery before materialize.js-->
+		<script type="text/javascript" src="../../../../code.jquery.com/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="../../js/materialize.min.js"></script>
+		<script type="text/javascript" src="../../js/showmessage.js"></script>
+		<script type="text/javascript" src="../../js/menu.js"></script>
+		<script src="../../js/underscore-min.js"></script>
+		<script src="../../js/moment-2.2.1.js"></script>
+		<script src="../../js/clndr.js"></script>
+		<script src="../../js/site.js"></script>
+        <script src="../../js/trombi.js"></script>
+		<script type="text/javascript" src="../../js/fonctions.js"></script>
+		<script type="text/javascript">
+		//$(document).ready(function(){showMessage();});
+
+		$(document).ready(function() {
+			$('select').material_select();
+		});
+
+		 $(function(){
+		   $(window).scroll(function () {//Au scroll dans la fenetre on déclenche la fonction
+		      if ($(this).scrollTop() > 200) { //si on a défilé de plus de 200px du haut vers le bas
+		      	document.getElementById('scroll-nav').style.top='0px';
+		      } else{
+		      	document.getElementById('scroll-nav').style.top='-200px';
+		      }
+		   });
+		 });
+
+		window.onload=ajuste;
+			function ajuste(){
+			document.getElementById('aside1').style.minHeight=document.getElementById('bloc1').offsetHeight+"px";
+			document.getElementById('aside2').style.minheight=document.getElementById('calendar').offsetHeight+"px";
+		}
+		</script>
+		
+    </body>
+  
+<!-- Mirrored from mickael.martin-nevot.perso.luminy.univ-amu.fr/zenetude/php/view/index.php by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 04 Dec 2017 17:46:14 GMT -->
+</html>
