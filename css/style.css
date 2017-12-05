@@ -124,6 +124,16 @@ nav>.nav-wrapper>img{
 .row1{
 	padding-top:20px; 
 }
+#dasboard li a.active{
+	z-index: 30;
+	background-color: rgb(123, 186, 66);
+	opacity: 1;
+}
+#dasboard li a{
+	background-color: rgb(123, 186, 66);
+	opacity: 0.8;
+
+}
 
 .container{
 	width: 100%;
