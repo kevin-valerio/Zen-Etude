@@ -1,0 +1,8 @@
+FTP alwaysdata :
+  Hote : ftp-zenetude.alwaysdata.net
+  Username: conslight@outlook.fr
+  Password: zenetude
+ssh zenetude@ssh-zenetude.alwaysdata.net
+
+
+http://zenetude.alwaysdata.net/php/view/index.html
