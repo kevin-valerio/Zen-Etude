@@ -19,7 +19,7 @@ class Connection extends Controller
         if (checkConnexionValid($email,$passwd))
             require ROOT . '/views/dashboard.html';
         else {
-            header('location:/');
+//            header('location:/');
 
 
         }
