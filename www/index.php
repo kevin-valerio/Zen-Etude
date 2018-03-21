@@ -25,11 +25,11 @@ $controllerObject->$action();
 }
 
 }
-else {
-require 'controller/pagenotfound.php';
-$controllerObject = new Pagenotfound();
-$controllerObject->displayError();
-$controllerObject->end_page();
+else { //page d'Erreur
+//require 'controller/pagenotfound.php';
+//$controllerObject = new Pagenotfound();
+//$controllerObject->displayError();
+//$controllerObject->end_page();
 }
 }
 
