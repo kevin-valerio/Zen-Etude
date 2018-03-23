@@ -199,7 +199,7 @@
     daysArray = [];
     var date = currentMonth.startOf('month');
 
-    // filter the events list (if it exists) to events that are happening last month, this month and next month (within the current grid view)
+    // filter the events list (if it exists) to events that are happening last month, this month and next month (within the current grid views)
     this.eventsLastMonth = [];
     this.eventsThisMonth = [];
     this.eventsNextMonth = [];
