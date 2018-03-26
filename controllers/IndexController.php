@@ -17,6 +17,12 @@ class IndexController
              showAllWithView('views/accueil.php');
         }
     }
+
+    public static function error() {
+
+            showAllWithView('views/404.php');
+
+    }
 }
 
 ?>

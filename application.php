@@ -4,6 +4,7 @@ require 'controllers/UserController.php';
 require 'controllers/PasswordForgetController.php';
 require 'controllers/DashboardController.php';
 require 'controllers/IndexController.php';
+require 'controllers/ManageAccountController.php';
 
 class Application {
        
@@ -21,13 +22,17 @@ class Application {
                 $mainController->$functionLink();
             }
             else {
+
                 IndexController::index();
             }
         }
-
-        else {
+        elseif ($_SERVER["REQUEST_URI"] == "/" ||
+            $_SERVER["REQUEST_URI"] == "/index.php" ||
+            $_SERVER["REQUEST_URI"] == "/accueil.php"){
             IndexController::index();
-
+        }
+        else {
+            IndexController::error();
         }
     }
 }

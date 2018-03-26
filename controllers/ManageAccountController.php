@@ -5,19 +5,17 @@ require_once 'views/core.php';
 require_once 'controllers/Controler.php';
 
 
-
-class DashboardController extends Controller
+class ManageAccountController extends Controller
 {
 
-    function __construct()
+    public function __construct()
     {
         parent::checkIfValidURL();
     }
 
-    public static function show() {
-             showAllWithView('views/profil.php');
-
+    public function show()
+    {
+        showAllWithView("views/profil.php");
     }
-}
 
-?>
+}

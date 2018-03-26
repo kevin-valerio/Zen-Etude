@@ -6,6 +6,5 @@
     
     $mainApp = new Application();
     $mainApp->start();
-    
 
 ?>

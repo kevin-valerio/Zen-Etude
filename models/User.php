@@ -28,6 +28,46 @@ class User
         $this->paysdomicile = $paysdomicile;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getCodepostal()
+    {
+        return $this->codepostal;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVilledomicile()
+    {
+        return $this->villedomicile;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPaysdomicile()
+    {
+        return $this->paysdomicile;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTelephone()
+    {
+        return $this->telephone;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTelephonemobile()
+    {
+        return $this->telephonemobile;
+    }
+
 
     /*
      * Permet de changer le pseudo
@@ -38,7 +78,7 @@ class User
         $this->username = $pseudo;
         $pdo = Database::getConnection();
 
-        $sql = "UPDATE users SET pseudo = :pseudo    WHERE mail = :mail";
+        $sql = "UPDATE users SET pseudo = :pseudo  WHERE mail = :mail";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':mail', $this->mailAdress, PDO::PARAM_STR);
         $stmt->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
