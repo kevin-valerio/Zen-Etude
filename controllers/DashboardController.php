@@ -15,7 +15,7 @@ class DashboardController extends Controller
     }
 
     public static function show() {
-             showAllWithView('views/profil.php');
+             showAllWithView('views/dashboard.php');
 
     }
 }
