@@ -29,6 +29,7 @@ function showAllWithView($requestedView)
 
         <script type="text/javascript" src="res/js/materialize.min.js"></script>
         <link type="text/css" rel="stylesheet" href="res/css/materialize.min.css" media="screen,projection"/>
+
         <link type="text/css" rel="stylesheet" href="res/css/style.css"/>
         <link type="text/css" rel="stylesheet" href="res/css/menu.css"/>
         <link type="text/css" rel="stylesheet" href="res/css/profil.css"/>
@@ -42,12 +43,26 @@ function showAllWithView($requestedView)
     <ul id="dropdown1" class="dropdown-content">
         <li><a href="?controller=manageAccount&action=show" class="center">Gérer</a></li>
         <li class="divider"></li>
+        <?php
+        if (!is_null($account)) {
+            if ($account->getIsAdmin() == 'true') {
+                echo('<li><a href="?controller=admin&action=show" class="center">Administration</a></li>');
+                echo('<li class="divider"></li>');
+            }
+        }?>
         <li><a href="?controller=user&action=disconnect"><i class="material-icons center">power_settings_new</i></a>
         </li>
     </ul>
     <ul id="dropdown2" class="dropdown-content">
         <li><a href="?controller=manageAccount&action=show" class="center">Gérer</a></li>
         <li class="divider"></li>
+        <?php
+        if (!is_null($account)) {
+            if ($account->getIsAdmin() == 'true') {
+                echo('<li><a href="?controller=admin&action=show" class="center">Administration</a></li>');
+                echo('<li class="divider"></li>');
+            }
+        }?>
         <li><a href="?controller=user&action=disconnect"><i class="material-icons center">power_settings_new</i></a></li>
     </ul>
 
@@ -72,6 +87,7 @@ function showAllWithView($requestedView)
                 <ul class="side-nav" id="mobile-demo">
                     <li class="active"><a href="?controller=dashboard&action=show">Tableau de bords</a></li>
                     <li><a href="profile.html" class="center">Gérer</a></li>
+
                     <li><a href="home.html"><i class="material-icons center">power_settings_new</i></a></li>
                 </ul>
 
@@ -95,6 +111,7 @@ function showAllWithView($requestedView)
             <ul class="side-nav" id="mobile-demo">
                 <li class="active"><a href="?controller=dashboard&action=show">Tableau de bords</a></li>
                 <li><a href="profile.html" class="center">Gérer</a></li>
+                <li><a href="profile.html" class="center">Gérer</a></li>
                 <li><a href="home.html"><i class="material-icons center">power_settings_new</i></a></li>
             </ul>
         </div>
@@ -114,6 +131,7 @@ function showAllWithView($requestedView)
     </footer>
 
     <script type="text/javascript" src="res/js/showmessage.js"></script>
+    <script type="text/javascript" src="./res/js/profilmodif.js"></script>
     <script type="text/javascript" src="res/js/menu.js"></script>
     <script src="res/js/underscore-min.js"></script>
     <script src="res/js/moment-2.2.1.js"></script>

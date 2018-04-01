@@ -14,9 +14,10 @@ class User
     private $paysdomicile;
     private $telephone;
     private $telephonemobile;
+    private $isadmin;
 
 
-    public function __construct($etu_id, $mailAdress, $pass, $codepostal, $villedomicile, $paysdomicile,$telephone, $telephonemobile)
+    public function __construct($etu_id, $mailAdress, $pass, $codepostal, $villedomicile, $paysdomicile,$telephone, $telephonemobile, $isadmin)
     {
         $this->etu_id = $etu_id;
         $this->mailAdress = $mailAdress;
@@ -26,6 +27,7 @@ class User
         $this->telephone = $telephone;
         $this->telephonemobile = $telephonemobile;
         $this->paysdomicile = $paysdomicile;
+        $this->isadmin = $isadmin;
     }
 
     /**
@@ -66,6 +68,11 @@ class User
     public function getTelephonemobile()
     {
         return $this->telephonemobile;
+    }
+
+    public function getIsAdmin()
+    {
+        return $this->isadmin;
     }
 
 
@@ -191,6 +198,10 @@ class User
         } catch (PDOException $e) {
             return NULL;
         }
+
+        $str = "false";
+        if ($fetchedUser["isadmin"])
+            $str = "true";
         return new User($fetchedUser["etu_id"],
             $fetchedUser["mail"],
             $fetchedUser["pass"],
@@ -198,7 +209,8 @@ class User
             $fetchedUser["villedomicile"],
             $fetchedUser["paysdomicile"],
             $fetchedUser["telephone"],
-            $fetchedUser["telephonemobile"]);
+            $fetchedUser["telephonemobile"],
+            $str);
     }
 
 
@@ -287,6 +299,9 @@ class User
 
              return null;
         }
+        $str = "false";
+        if ($fetchedUser["isadmin"])
+            $str = "true";
         return new User($fetchedUser["etu_id"],
             $fetchedUser["mail"],
             $fetchedUser["pass"],
@@ -294,7 +309,8 @@ class User
             $fetchedUser["villedomicile"],
             $fetchedUser["paysdomicile"],
             $fetchedUser["telephone"],
-            $fetchedUser["telephonemobile"]);
+            $fetchedUser["telephonemobile"],
+            $str);
     }
 
 

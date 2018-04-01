@@ -5,6 +5,7 @@ require 'controllers/PasswordForgetController.php';
 require 'controllers/DashboardController.php';
 require 'controllers/IndexController.php';
 require 'controllers/ManageAccountController.php';
+require 'controllers/AdminController.php';
 
 class Application {
        

@@ -526,6 +526,12 @@ input, select{
 	color: white !important; 
 }
 
+.modal{
+	background-color: #fafafa00 !important;
+}
+.z-depth-4, .modal{
+	box-shadow: none !important;
+}
 /********************/
 /** PAGE ERREUR **/
 /********************/
