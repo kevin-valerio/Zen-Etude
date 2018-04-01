@@ -9,7 +9,7 @@
 class Absence
 {
 
-    private $id_abs;
+//    private $id_abs;
     private $id_etu;
     private $date;
     private $matiere;
@@ -21,29 +21,29 @@ class Absence
      * @param $date
      * @param $matiere
      */
-    public function __construct($id_abs, $id_etu, $date, $matiere)
+    public function __construct($id_etu, $date, $matiere)
     {
-        $this->id_abs = $id_abs;
+//        $this->id_abs = $id_abs;
         $this->id_etu = $id_etu;
         $this->date = $date;
         $this->matiere = $matiere;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getIdAbs()
-    {
-        return $this->id_abs;
-    }
-
-    /**
-     * @param mixed $id_abs
-     */
-    public function setIdAbs($id_abs)
-    {
-        $this->id_abs = $id_abs;
-    }
+//    /**
+//     * @return mixed
+//     */
+//    public function getIdAbs()
+//    {
+//        return $this->id_abs;
+//    }
+//
+//    /**
+//     * @param mixed $id_abs
+//     */
+//    public function setIdAbs($id_abs)
+//    {
+//        $this->id_abs = $id_abs;
+//    }
 
     /**
      * @return mixed

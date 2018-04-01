@@ -201,16 +201,16 @@ class User
             $fetchedUser["telephonemobile"]);
     }
 
-
+    // à  revoir car il faut modifier Absence
     public function getAbsences()  {
 
         try {
 
-            $pdo = Database::getConnection();
+            $pdo = Database::getConnection("zenetude_base");
 
             $query = $pdo->prepare("SELECT *
-                                                FROM absence
-                                                WHERE id_etu = :id_etu");
+                                                FROM absences
+                                                WHERE etudid = :id_etu");
 
             $query->execute(array(
                 "id_etu" => $this->etu_id,
@@ -220,10 +220,11 @@ class User
             $absence = array();
 
             foreach ($fetchedNote as $row) {
-                array_push($absence, new Absence($row["id_abs"],
-                    $row["id_etu"],
-                    $row["date"],
-                    $row["matiere"]));
+                array_push($absence, new Absence(
+                    $row["etudid"],
+                    $row["jour"],
+                    NULL));
+//                    $row["matiere"]));
             }
         } catch (PDOException $e) {
             return NULL;
