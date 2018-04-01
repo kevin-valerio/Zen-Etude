@@ -131,7 +131,7 @@ function showAllWithView($requestedView)
     </footer>
 
     <script type="text/javascript" src="res/js/showmessage.js"></script>
-    <script type="text/javascript" src="./res/js/profilmodif.js"></script>
+    <script type="text/javascript" src="res/js/profilmodif.js"></script>
     <script type="text/javascript" src="res/js/menu.js"></script>
     <script src="res/js/underscore-min.js"></script>
     <script src="res/js/moment-2.2.1.js"></script>

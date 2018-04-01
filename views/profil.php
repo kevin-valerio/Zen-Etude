@@ -45,7 +45,7 @@
 							                <td style="width: 1500px">    <?php
                                                 echo Controller::getMainUser()->getPaysdomicile();
                                                 ?>
-                                            </td><td style="padding-right: 5px"><button id="paymodal" class="btn">Modifier</button></td>
+                                            </td><td style="padding-right: 5px"><a id="paysmodal" class="waves-effect waves-light btn">Modifier</a></td>
 
 
 
@@ -55,42 +55,33 @@
                                             <td style="width: 1500px">    <?php
                                                 echo Controller::getMainUser()->getVilledomicile();
                                                 ?>
-                                            </td><td style="padding-right: 5px"><a  onclick="
-                                            bootbox.prompt('This is the default prompt!', function(result){ console.log(result); });"
-                                                                                    href="#!">Modifier</a></td>
+                                            </td><td style="padding-right: 5px"><a id="villemodal" class="waves-effect waves-light btn">Modifier</a></td>
                                         </tr>
                                         <tr>
                                             <th style="width: 200px">Code postal</th>
                                             <td style="width: 1500px">    <?php
                                                 echo Controller::getMainUser()->getCodepostal();
                                                 ?>
-                                            </td><td style="padding-right: 5px"><a  onclick="
-                                            bootbox.prompt('This is the default prompt!', function(result){ console.log(result); });"
-                                                                                    href="#!">Modifier</a></td>
+                                            </td><td style="padding-right: 5px"><a id="codepostalmodal" class="waves-effect waves-light btn">Modifier</a></td>
                                         </tr>
 							            <tr>
 							                <th style="width: 200px">Mot de Passe</th>
-							                <td style="width: 1500px">**********</td><td style="padding-right: 5px"><a  onclick="
-                                            bootbox.prompt('This is the default prompt!', function(result){ console.log(result); });"
-                                                                                                                        href="#!">Modifier</a></td>
+                                            <td style="width: 1500px">**********
+                                            </td><td style="padding-right: 5px"><a id="mdpmodal" class="waves-effect waves-light btn">Modifier</a></td>
 							            </tr>
                                         <tr>
                                             <th style="width: 200px">Téléphone fixe </th>
                                             <td style="width: 1500px">    <?php
                                                 echo Controller::getMainUser()->getTelephone();
                                                 ?>
-                                            </td><td style="padding-right: 5px"><a  onclick="
-                                            bootbox.prompt('This is the default prompt!', function(result){ console.log(result); });"
-                                                                                    href="#!">Modifier</a></td>
+                                            </td><td style="padding-right: 5px"><a id="telmodal" class="waves-effect waves-light btn">Modifier</a></td>
                                         </tr>
                                         <tr>
                                             <th style="width: 200px">Téléphone mobile </th>
                                             <td style="width: 1500px">    <?php
                                                 echo Controller::getMainUser()->getTelephonemobile();
                                                 ?>
-                                            </td><td style="padding-right: 5px"><a  onclick="
-                                            bootbox.prompt('This is the default prompt!', function(result){ console.log(result); });"
-                                                                                    href="#!">Modifier</a></td>
+                                            </td><td style="padding-right: 5px"><a id="mobilemodal" class="waves-effect waves-light btn">Modifier</a></td>
                                         </tr>
 							        </table>
 								</form>
