@@ -201,7 +201,7 @@ class User
             $fetchedUser["telephonemobile"]);
     }
 
-    // à  revoir car il faut modifier Absence
+    /* recup dans abs_absences la durée de l'absence / absence la date */
     public function getAbsences()  {
 
         try {
@@ -233,7 +233,7 @@ class User
         return $absence;
     }
 
-
+    /* faire des jointures pour récup ce que l'on veut */
     public function getNotes()  {
 
         try {
