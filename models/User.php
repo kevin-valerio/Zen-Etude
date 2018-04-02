@@ -101,7 +101,7 @@ class User
         $this->paysdomicile = $paysdomicile;
         $pdo = Database::getConnection();
 
-        $sql = "UPDATE users SET paysdomicile = :pseudo  WHERE mail = :mail";
+        $sql = "UPDATE users SET paysdomicile = :paysdomicile  WHERE mail = :mail";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':mail', $this->mailAdress, PDO::PARAM_STR);
         $stmt->bindParam(':paysdomicile', $paysdomicile, PDO::PARAM_STR);
