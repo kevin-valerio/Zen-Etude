@@ -325,7 +325,7 @@
                                                 <form class="form" role="form">
                                                     <div class="form-group">
                                                         <p><label>Ancienne ville:</label></p>
-                                                        <span><?= Controller::getMainUser()->getPaysdomicile() ?></span>
+                                                        <span><?= Controller::getMainUser()->getVilledomicile() ?></span>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="ville">Tapez votre nouvelle ville</label>
@@ -340,6 +340,19 @@
                                                 echo Controller::getMainUser()->getCodepostal();
                                                 ?>
                                             </td><td style="padding-right: 5px"><a id="codepostalmodal" class="waves-effect waves-light btn">Modifier</a></td>
+                                            <!-- bootbox modal -->
+                                            <div class="form-content-codepostal" style="display:none;">
+                                                <form class="form" role="form">
+                                                    <div class="form-group">
+                                                        <p><label>Ancienne codepostal:</label></p>
+                                                        <span><?= Controller::getMainUser()->getCodepostal() ?></span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="codepostal">Tapez votre nouveau codepostal</label>
+                                                        <input value="" type="text" class="form-control codepostal" name="codepostal">
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </tr>
 							            <tr>
 							                <th style="width: 200px">Mot de Passe</th>
@@ -367,6 +380,19 @@
                                                 echo Controller::getMainUser()->getTelephone();
                                                 ?>
                                             </td><td style="padding-right: 5px"><a id="telmodal" class="waves-effect waves-light btn">Modifier</a></td>
+                                            <!-- bootbox modal -->
+                                            <div class="form-content-tel" style="display:none;">
+                                                <form class="form" role="form">
+                                                    <div class="form-group">
+                                                        <p><label>Ancien tellephone:</label></p>
+                                                        <span><?= Controller::getMainUser()->getTelephone() ?></span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="tel">Tapez votre nouveau telephone</label>
+                                                        <input value="" type="text" class="form-control tel" name="tel">
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </tr>
                                         <tr>
                                             <th style="width: 200px">Téléphone mobile </th>
@@ -374,6 +400,19 @@
                                                 echo Controller::getMainUser()->getTelephonemobile();
                                                 ?>
                                             </td><td style="padding-right: 5px"><a id="mobilemodal" class="waves-effect waves-light btn">Modifier</a></td>
+                                            <!-- bootbox modal -->
+                                            <div class="form-content-mobile" style="display:none;">
+                                                <form class="form" role="form">
+                                                    <div class="form-group">
+                                                        <p><label>Ancien telephone mobile:</label></p>
+                                                        <span><?= Controller::getMainUser()->getTelephonemobile() ?></span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="mobile">Tapez votre nouveau mobile</label>
+                                                        <input value="" type="text" class="form-control mobile" name="mobile">
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </tr>
 							        </table>
 								</form>

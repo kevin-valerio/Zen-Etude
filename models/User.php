@@ -95,6 +95,34 @@ class User
 
     }
 
+    public function setPaysDomicile($paysdomicile)
+    {
+
+        $this->paysdomicile = $paysdomicile;
+        $pdo = Database::getConnection();
+
+        $sql = "UPDATE users SET paysdomicile = :pseudo  WHERE mail = :mail";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':mail', $this->mailAdress, PDO::PARAM_STR);
+        $stmt->bindParam(':paysdomicile', $paysdomicile, PDO::PARAM_STR);
+        $stmt->execute();
+
+    }
+
+    public function setCodepostal($codepostal)
+    {
+
+        $this->codepostal = $codepostal;
+        $pdo = Database::getConnection();
+
+        $sql = "UPDATE users SET codepostal = :codepostal  WHERE mail = :mail";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':mail', $this->mailAdress, PDO::PARAM_STR);
+        $stmt->bindParam(':codepostal', $codepostal, PDO::PARAM_STR);
+        $stmt->execute();
+
+    }
+
 
 
     /*
@@ -109,6 +137,18 @@ class User
         $stmt = $pdo->prepare("UPDATE users SET pass = :pass WHERE mail = :mail");
         $stmt->bindParam(':mail', $this->mailAdress, PDO::PARAM_STR);
         $stmt->bindParam(':pass', $password, PDO::PARAM_STR);
+        $stmt->execute();
+    }
+
+    public function setMailAdress($mailAdress)
+    {
+
+        $this->mailAdress = $mailAdress;
+        $pdo = Database::getConnection();
+
+        $stmt = $pdo->prepare("UPDATE users SET mail = :mail WHERE etu_id = :id");
+        $stmt->bindParam(':mail', $this->mailAdress, PDO::PARAM_STR);
+        $stmt->bindParam(':id', $this->etu_id, PDO::PARAM_STR);
         $stmt->execute();
     }
 
