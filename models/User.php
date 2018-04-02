@@ -422,9 +422,20 @@ class User
                 $fetchedUsers = $query->fetchAll();
                 $users = array();
 
+
+
+                $pdo = Database::getConnection();
                 foreach ($fetchedUsers as $row) {
-                    array_push($users, [$row["etudid"],$row["email"], "non"]);
+                    $id = $row['etudid'];
+                    $mail = $row['email'];
+
+                    $query = $pdo->prepare("INSERT INTO  users (etu_id, mail,isAccountCreated) VALUES ('$id','$mail',false");
+                    $query->execute();
                 }
+
+
+
+
             } catch (PDOException $e) {
                 return null;
             }
