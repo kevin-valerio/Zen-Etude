@@ -5,5 +5,5 @@ require_once $_SERVER['DOCUMENT_ROOT'] . "controllers/Controler.php";
 session_start();
 
 $user = Controller::getMainUser();
-$user->setPaysDomicile($_POST['email']);
+$user->setMailAdress($_POST['mail']);
 $user->disconnect();

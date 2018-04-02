@@ -1,7 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: william
- * Date: 02/04/2018
- * Time: 15:34
- */
+
+require_once $_SERVER['DOCUMENT_ROOT'] . 'models/User.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . "controllers/Controler.php";
+session_start();
+
+$user = Controller::getMainUser();
+$user->setTelephone($_POST['tel']);
+$user->disconnect();

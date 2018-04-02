@@ -123,6 +123,47 @@ class User
 
     }
 
+    public function setVilledomicile($villedomicile)
+    {
+
+        $this->villedomicile = $villedomicile;
+        $pdo = Database::getConnection();
+
+        $sql = "UPDATE users SET villedomicile = :villedomicile  WHERE mail = :mail";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':mail', $this->mailAdress, PDO::PARAM_STR);
+        $stmt->bindParam(':villedomicile', $villedomicile, PDO::PARAM_STR);
+        $stmt->execute();
+
+    }
+
+    public function setTelephoneMobile($telephonemobile)
+    {
+
+        $this->telephonemobile = $telephonemobile;
+        $pdo = Database::getConnection();
+
+        $sql = "UPDATE users SET telephonemobile = :telephonemobile  WHERE mail = :mail";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':mail', $this->mailAdress, PDO::PARAM_STR);
+        $stmt->bindParam(':telephonemobile', $telephonemobile, PDO::PARAM_STR);
+        $stmt->execute();
+
+    }
+    public function setTelephone($telephone)
+    {
+
+        $this->telephone = $telephone;
+        $pdo = Database::getConnection();
+
+        $sql = "UPDATE users SET telephone = :telephone  WHERE mail = :mail";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':mail', $this->mailAdress, PDO::PARAM_STR);
+        $stmt->bindParam(':telephone', $telephone, PDO::PARAM_STR);
+        $stmt->execute();
+
+    }
+
 
 
     /*
