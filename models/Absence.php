@@ -9,41 +9,38 @@
 class Absence
 {
 
-    private $id_abs;
     private $id_etu;
     private $date;
-    private $matiere;
+    private $demijournee;
 
     /**
      * Absence constructor.
-     * @param $id_abs
      * @param $id_etu
      * @param $date
-     * @param $matiere
+     * @param $demijournee
      */
-    public function __construct($id_abs, $id_etu, $date, $matiere)
+    public function __construct($id_etu, $date, $demijournee)
     {
-        $this->id_abs = $id_abs;
         $this->id_etu = $id_etu;
         $this->date = $date;
-        $this->matiere = $matiere;
+        $this->demijournee = $demijournee;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getIdAbs()
-    {
-        return $this->id_abs;
-    }
-
-    /**
-     * @param mixed $id_abs
-     */
-    public function setIdAbs($id_abs)
-    {
-        $this->id_abs = $id_abs;
-    }
+//    /**
+//     * @return mixed
+//     */
+//    public function getIdAbs()
+//    {
+//        return $this->id_abs;
+//    }
+//
+//    /**
+//     * @param mixed $id_abs
+//     */
+//    public function setIdAbs($id_abs)
+//    {
+//        $this->id_abs = $id_abs;
+//    }
 
     /**
      * @return mixed
@@ -80,17 +77,17 @@ class Absence
     /**
      * @return mixed
      */
-    public function getMatiere()
+    public function getDemijournee()
     {
-        return $this->matiere;
+        return $this->demijournee;
     }
 
     /**
-     * @param mixed $matiere
+     * @param mixed $demijournee
      */
-    public function setMatiere($matiere)
+    public function setDemijournee($demijournee)
     {
-        $this->matiere = $matiere;
+        $this->demijournee = $demijournee;
     }
 
 

@@ -305,16 +305,15 @@ class User
             $str);
     }
 
-
     public function getAbsences()  {
 
         try {
 
-            $pdo = Database::getConnection();
+            $pdo = Database::getConnection("zenetude_base");
 
             $query = $pdo->prepare("SELECT *
-                                                FROM absence
-                                                WHERE id_etu = :id_etu");
+                                                FROM absences
+                                                WHERE etudid = :id_etu");
 
             $query->execute(array(
                 "id_etu" => $this->etu_id,
@@ -324,10 +323,10 @@ class User
             $absence = array();
 
             foreach ($fetchedNote as $row) {
-                array_push($absence, new Absence($row["id_abs"],
-                    $row["id_etu"],
-                    $row["date"],
-                    $row["matiere"]));
+                array_push($absence, new Absence(
+                    $row["etudid"],
+                    $row["jour"],
+                    $row["matin"])); // matin=true -> 1 demijournee sinon 2
             }
         } catch (PDOException $e) {
             return NULL;
@@ -337,15 +336,20 @@ class User
     }
 
 
+
+    /* faire des jointures pour récup ce que l'on veut */
     public function getNotes()  {
 
         try {
 
-            $pdo = Database::getConnection();
+            $pdo = Database::getConnection("zenetude_base");
 
-            $query = $pdo->prepare("SELECT *
-                                                FROM note
-                                                WHERE id_etu = :id_etu");
+            $query = $pdo->prepare("SELECT n.etudid, n.evaluation_id, n.value, e.coefficient, m.titre
+                                                FROM notes_notes n, notes_evaluation e, notes_moduleimpl mod, notes_modules m 
+                                                WHERE etudid = :id_etu and n.evaluation_id = e.evaluation_id
+                                                and e.moduleimpl_id = mod.moduleimpl_id and mod.module_id = m.module_id
+                                                
+                                                ");
 
             $query->execute(array(
                 "id_etu" => $this->etu_id,
@@ -355,11 +359,11 @@ class User
             $notes = array();
 
             foreach ($fetchedNote as $row) {
-                array_push($notes, new Note($row["id_note"],
-                    $row["id_etu"],
-                    $row["note"],
-                    $row["coeff"],
-                    $row["matiere"]));
+                array_push($notes, new Note($row["evaluation_id"],
+                    $row["etudid"],
+                    $row["value"],
+                    $row["coefficient"],
+                    $row["titre"]));
             }
         } catch (PDOException $e) {
             return NULL;
