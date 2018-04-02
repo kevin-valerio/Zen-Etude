@@ -409,7 +409,32 @@ class User
             $str);
     }
 
+    public function getStudentsMails() {
+        if ($this->isadmin) {
+            try {
+
+                $pdo = Database::getConnection("zenetude_base");
+
+                $query = $pdo->prepare("SELECT etudid, email FROM adresse");
+
+                $query->execute();
+
+                $fetchedUsers = $query->fetchAll();
+                $users = array();
+
+                foreach ($fetchedUsers as $row) {
+                    array_push($users, [$row["etudid"],$row["email"], "non"]);
+                }
+            } catch (PDOException $e) {
+                return null;
+            }
+            return $users;
+        }
+    }
+
 
 }
+
+
 
 ?>
