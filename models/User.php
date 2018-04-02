@@ -422,15 +422,8 @@ class User
                 $fetchedUsers = $query->fetchAll();
                 $users = array();
 
-
-
-                $pdo = Database::getConnection();
                 foreach ($fetchedUsers as $row) {
-                    $id = $row['etudid'];
-                    $mail = $row['email'];
-
-                    $query = $pdo->prepare("INSERT INTO  users (etu_id, mail,isAccountCreated) VALUES ('$id','$mail',false");
-                    $query->execute();
+                    array_push($users, [$row["etudid"],$row["email"]]);
                 }
 
 
@@ -442,6 +435,24 @@ class User
             return $users;
         }
     }
+
+    public function checkifAccountCreated($etudid){
+
+        $pdo = Database::getConnection();
+
+        $query = $pdo->prepare("SELECT isaccountcreated FROM users where id_etu = :etuid");
+        $query->bindParam(":id_etu",$etudid);
+        $query->execute();
+
+        if ($query->fetchColumn() == 1)
+            $result=true;
+
+        else
+            $result=false;
+
+        return $result;
+}
+
 
 
 }
