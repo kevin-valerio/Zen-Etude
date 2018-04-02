@@ -1,5 +1,5 @@
 <?php
-require_once 'utils/database.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'utils/database.php';
 require_once 'Note.php';
 require_once 'Absence.php';
 
@@ -53,7 +53,9 @@ class User
     {
         return $this->paysdomicile;
     }
-
+    public function getPassword(){
+        return $this->pass;
+    }
     /**
      * @return mixed
      */
@@ -120,6 +122,15 @@ class User
      */
     public function disconnect()
     {
+        $_SESSION = array();
+
+        if (ini_get("sessions.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000,
+                $params["path"], $params["domain"],
+                $params["secure"], $params["httponly"]
+            );
+        }
         session_destroy();
     }
 

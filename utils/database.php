@@ -1,4 +1,3 @@
-x
 <?php
 
     class Database {
@@ -7,7 +6,6 @@ x
         const DB_PASSWORD = "zenetude";
         const DB_USER = "zenetude";
         const DB_SERVER = "postgresql-zenetude.alwaysdata.net";
-
 
 //
 //        const DB_PASSWORD = "root";
