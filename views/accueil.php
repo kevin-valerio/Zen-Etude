@@ -32,7 +32,8 @@
                                         <input id="email" type="email" class="validate" name="mail">
                                         <label for="email">Email</label>
                                     </div>
-                                </div><!-- fin email -->
+                                </div>
+                                <!-- fin email -->
 
                                 <!-- mot de passe -->
                                 <div class="row">
