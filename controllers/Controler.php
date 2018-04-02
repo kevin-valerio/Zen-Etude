@@ -1,6 +1,5 @@
 <?php
-
-require_once 'utils/alert.php';
+require_once $_SERVER['DOCUMENT_ROOT']."utils/alert.php";
 
 
 class Controller
@@ -25,6 +24,7 @@ class Controller
      */
     public static function getMainUser()
     {
+
         self::$mainUser = $_SESSION['account'];
         return self::$mainUser;
     }

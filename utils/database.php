@@ -1,11 +1,17 @@
-x
 <?php
 
     class Database {
 
+
         const DB_PASSWORD = "zenetude";
-        const DB_USER = "zenetude"; /* Oui, il s'agit bien de l'utilisateur ! */
+        const DB_USER = "zenetude";
         const DB_SERVER = "postgresql-zenetude.alwaysdata.net";
+
+//
+//        const DB_PASSWORD = "root";
+//        const DB_USER = "postgres";
+//        const DB_SERVER = "127.0.0.1";
+
 
         public static function getConnection($dbName = "zenetude_perso") {
             try {

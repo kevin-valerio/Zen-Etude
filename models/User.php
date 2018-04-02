@@ -1,5 +1,5 @@
 <?php
-require_once 'utils/database.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'utils/database.php';
 require_once 'Note.php';
 require_once 'Absence.php';
 
@@ -14,9 +14,10 @@ class User
     private $paysdomicile;
     private $telephone;
     private $telephonemobile;
+    private $isadmin;
 
 
-    public function __construct($etu_id, $mailAdress, $pass, $codepostal, $villedomicile, $paysdomicile,$telephone, $telephonemobile)
+    public function __construct($etu_id, $mailAdress, $pass, $codepostal, $villedomicile, $paysdomicile,$telephone, $telephonemobile, $isadmin)
     {
         $this->etu_id = $etu_id;
         $this->mailAdress = $mailAdress;
@@ -26,6 +27,7 @@ class User
         $this->telephone = $telephone;
         $this->telephonemobile = $telephonemobile;
         $this->paysdomicile = $paysdomicile;
+        $this->isadmin = $isadmin;
     }
 
     /**
@@ -51,7 +53,9 @@ class User
     {
         return $this->paysdomicile;
     }
-
+    public function getPassword(){
+        return $this->pass;
+    }
     /**
      * @return mixed
      */
@@ -68,6 +72,11 @@ class User
         return $this->telephonemobile;
     }
 
+    public function getIsAdmin()
+    {
+        return $this->isadmin;
+    }
+
 
     /*
      * Permet de changer le pseudo
@@ -82,6 +91,75 @@ class User
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':mail', $this->mailAdress, PDO::PARAM_STR);
         $stmt->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
+        $stmt->execute();
+
+    }
+
+    public function setPaysDomicile($paysdomicile)
+    {
+
+        $this->paysdomicile = $paysdomicile;
+        $pdo = Database::getConnection();
+
+        $sql = "UPDATE users SET paysdomicile = :pseudo  WHERE mail = :mail";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':mail', $this->mailAdress, PDO::PARAM_STR);
+        $stmt->bindParam(':paysdomicile', $paysdomicile, PDO::PARAM_STR);
+        $stmt->execute();
+
+    }
+
+    public function setCodepostal($codepostal)
+    {
+
+        $this->codepostal = $codepostal;
+        $pdo = Database::getConnection();
+
+        $sql = "UPDATE users SET codepostal = :codepostal  WHERE mail = :mail";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':mail', $this->mailAdress, PDO::PARAM_STR);
+        $stmt->bindParam(':codepostal', $codepostal, PDO::PARAM_STR);
+        $stmt->execute();
+
+    }
+
+    public function setVilledomicile($villedomicile)
+    {
+
+        $this->villedomicile = $villedomicile;
+        $pdo = Database::getConnection();
+
+        $sql = "UPDATE users SET villedomicile = :villedomicile  WHERE mail = :mail";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':mail', $this->mailAdress, PDO::PARAM_STR);
+        $stmt->bindParam(':villedomicile', $villedomicile, PDO::PARAM_STR);
+        $stmt->execute();
+
+    }
+
+    public function setTelephoneMobile($telephonemobile)
+    {
+
+        $this->telephonemobile = $telephonemobile;
+        $pdo = Database::getConnection();
+
+        $sql = "UPDATE users SET telephonemobile = :telephonemobile  WHERE mail = :mail";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':mail', $this->mailAdress, PDO::PARAM_STR);
+        $stmt->bindParam(':telephonemobile', $telephonemobile, PDO::PARAM_STR);
+        $stmt->execute();
+
+    }
+    public function setTelephone($telephone)
+    {
+
+        $this->telephone = $telephone;
+        $pdo = Database::getConnection();
+
+        $sql = "UPDATE users SET telephone = :telephone  WHERE mail = :mail";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':mail', $this->mailAdress, PDO::PARAM_STR);
+        $stmt->bindParam(':telephone', $telephone, PDO::PARAM_STR);
         $stmt->execute();
 
     }
@@ -103,6 +181,18 @@ class User
         $stmt->execute();
     }
 
+    public function setMailAdress($mailAdress)
+    {
+
+        $this->mailAdress = $mailAdress;
+        $pdo = Database::getConnection();
+
+        $stmt = $pdo->prepare("UPDATE users SET mail = :mail WHERE etu_id = :id");
+        $stmt->bindParam(':mail', $this->mailAdress, PDO::PARAM_STR);
+        $stmt->bindParam(':id', $this->etu_id, PDO::PARAM_STR);
+        $stmt->execute();
+    }
+
     public function getMail()
     {
         return $this->mailAdress;
@@ -113,6 +203,15 @@ class User
      */
     public function disconnect()
     {
+        $_SESSION = array();
+
+        if (ini_get("sessions.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000,
+                $params["path"], $params["domain"],
+                $params["secure"], $params["httponly"]
+            );
+        }
         session_destroy();
     }
 
@@ -191,6 +290,10 @@ class User
         } catch (PDOException $e) {
             return NULL;
         }
+
+        $str = "false";
+        if ($fetchedUser["isadmin"])
+            $str = "true";
         return new User($fetchedUser["etu_id"],
             $fetchedUser["mail"],
             $fetchedUser["pass"],
@@ -198,7 +301,8 @@ class User
             $fetchedUser["villedomicile"],
             $fetchedUser["paysdomicile"],
             $fetchedUser["telephone"],
-            $fetchedUser["telephonemobile"]);
+            $fetchedUser["telephonemobile"],
+            $str);
     }
 
     public function getAbsences()  {
@@ -291,6 +395,9 @@ class User
 
              return null;
         }
+        $str = "false";
+        if ($fetchedUser["isadmin"])
+            $str = "true";
         return new User($fetchedUser["etu_id"],
             $fetchedUser["mail"],
             $fetchedUser["pass"],
@@ -298,7 +405,8 @@ class User
             $fetchedUser["villedomicile"],
             $fetchedUser["paysdomicile"],
             $fetchedUser["telephone"],
-            $fetchedUser["telephonemobile"]);
+            $fetchedUser["telephonemobile"],
+            $str);
     }
 
 

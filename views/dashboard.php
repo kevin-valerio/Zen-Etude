@@ -5,7 +5,9 @@
 
         <div class="col s12 m12">
             <div class="card-panel teal" id="bloc1">
-                <div class="card-header"><h2>Tableau de bords</h2></div>
+                <div class="card-header">
+                    <h2>Tableau de bords</h2>
+                </div>
                 <!--  -->
                 <div id="swipeable" class="section scrollspy row">
                     <div class="col m12">
@@ -27,6 +29,7 @@
                                 <tr>
 
                                     <?php
+
 
                                     foreach (Controller::getMainUser()->getNotes() as $note) {
                                         echo '<td data-title="Matière">' . $note->getMatiere() . '</td>';
