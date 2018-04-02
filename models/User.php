@@ -201,7 +201,6 @@ class User
             $fetchedUser["telephonemobile"]);
     }
 
-    /* recup dans abs_absences la durée de l'absence / absence la date */
     public function getAbsences()  {
 
         try {
@@ -223,8 +222,7 @@ class User
                 array_push($absence, new Absence(
                     $row["etudid"],
                     $row["jour"],
-                    NULL));
-//                    $row["matiere"]));
+                    $row["matin"]));
             }
         } catch (PDOException $e) {
             return NULL;

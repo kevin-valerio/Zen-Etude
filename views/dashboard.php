@@ -43,7 +43,7 @@
                             <table class="table striped highlight centered">
                                 <thead>
                                 <tr>
-                                    <th>Matière</th>
+                                    <th>Demi-journée</th>
                                     <th>Date</th>
                                 </tr>
                                 </thead>
@@ -53,7 +53,13 @@
                                     <?php
 
                                     foreach (Controller::getMainUser()->getAbsences() as $absence) {
-                                        echo '<td data-title="Matière">' . $absence->getMatiere() . '</td>';
+                                        if($absence->getDemijournee()){
+                                            echo '<td data-title="Demi-journée">' . 1 . '</td>';
+                                        }
+                                        else {
+                                            echo '<td data-title="Demi-journée">' . 2 . '</td>'; //journée entière
+
+                                        }
                                         echo '<td data-title="Date">' . $absence->getDate() . '</td><tr>';
                                     }
 
