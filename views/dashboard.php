@@ -32,9 +32,9 @@
 
 
                                     foreach (Controller::getMainUser()->getNotes() as $note) {
-                                        echo '<td data-title="Matière">' . $note->getMatiere() . '</td>';
-                                        echo '<td data-title="Coefficient">' . $note->getCoeff() . '</td>';
-                                        echo '<td data-title="Note">' . $note->getNote() . '</td><tr>';
+                                        echo '<td data-title="Matière">' . htmlspecialchars($note->getMatiere()) . '</td>';
+                                        echo '<td data-title="Coefficient">' . htmlspecialchars( $note->getCoeff()) . '</td>';
+                                        echo '<td data-title="Note">' . htmlspecialchars($note->getNote()) . '</td><tr>';
                                     }
 
                                     ?>
@@ -63,7 +63,7 @@
                                             echo '<td data-title="Demi-journée">' . 2 . '</td>'; //journée entière
 
                                         }
-                                        echo '<td data-title="Date">' . $absence->getDate() . '</td><tr>';
+                                        echo '<td data-title="Date">' . htmlspecialchars($absence->getDate()) . '</td><tr>';
                                     }
 
                                     ?>
