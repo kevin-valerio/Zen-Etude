@@ -25,6 +25,7 @@ class Controller
      */
     public static function getMainUser()
     {
+
         self::$mainUser = $_SESSION['account'];
         return self::$mainUser;
     }

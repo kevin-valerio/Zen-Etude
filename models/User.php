@@ -121,8 +121,9 @@ class User
      */
     public function createSession()
     {
-        session_start();
+		$_SESION['test']= "wf";
         $_SESSION['account'] = $this;
+        session_start();
     }
 
     /*

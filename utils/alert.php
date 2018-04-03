@@ -11,17 +11,16 @@ class Alerte
 
     static function printAlert($type, $content)
     {
-        if ($type == self::DANGER) {
-            echo '<div class="alert alert-danger"><strong> ' . ucfirst($type) . '</strong> ' . $content . '</div>';
-        } elseif ($type == self::WARNING) {
-            echo '<div class="alert alert-warning"><strong> ' . ucfirst($type) . '</strong> ' . $content . '</div>';
-        } elseif ($type == self::INFO) {
-            echo '<div class="alert alert-info"><strong> ' . ucfirst($type) . ' : </strong> ' . $content . '</div>';
-        } elseif ($type == self::SUCCESS) {
-            echo '<div class="alert alert-success"><strong> ' . ucfirst($type) . '</strong> ' . $content . '</div>';
+        foreach (Controller::getMainUser()->getStudentsMails() as $array) {
+            echo '<td data-title="ID de l\'étudiant">' . $array[0] . '</td>';
+            echo '<td  data-title="Mail">' . $array[1] . '</td>';
+
+            echo '<td data-title="Compte créé">' . $array[2] . '</td>';
+            echo '<td data-title=Inviter"><input type="button" value="Inviter"></td><tr>';
+
         }
 
-     }
+    }
 }
 
 ?>

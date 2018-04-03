@@ -31,7 +31,9 @@ class UserController extends Controller
         } elseif (!is_null($newUser)) {
 
             /*Connected*/
-            $newUser->createSession();
+
+            $_SESSION['account'] = $newUser;
+            session_start();
             redirect("/?controller=dashboard&action=show");
         }
 

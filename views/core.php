@@ -5,10 +5,10 @@ require_once "utils/util.php";
 function showAllWithView($requestedView)
 {
     $account = Controller::getMainUser();
-    session_start();
+  //  session_start();
     ?>
 
-    <!-- HEADER -->
+
 
 
     <!DOCTYPE html>

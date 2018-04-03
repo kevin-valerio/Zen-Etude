@@ -6,11 +6,17 @@ require 'controllers/DashboardController.php';
 require 'controllers/IndexController.php';
 require 'controllers/ManageAccountController.php';
 
+ 
+	
+ 
+
 class Application {
        
 
+	   
     function start(){
 
+        $_SESSION['account'] = null;
         $controllerLink = filter_input(INPUT_GET, 'controller');
         $functionLink   = filter_input(INPUT_GET, 'action');
         
@@ -32,7 +38,7 @@ class Application {
             IndexController::index();
         }
         else {
-            IndexController::error();
+            IndexController::index();
         }
     }
 }

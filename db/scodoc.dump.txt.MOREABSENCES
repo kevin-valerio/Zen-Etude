@@ -1,0 +1,3304 @@
+--
+-- PostgreSQL database cluster dump
+--
+
+\connect zenetude_base
+
+SET default_transaction_read_only = off;
+
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+
+--
+-- Roles
+--
+
+CREATE ROLE postgres;
+ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION PASSWORD 'md574fd9b4f4d8aa5fda0cd27a632361f79';
+CREATE ROLE "www-data";
+ALTER ROLE "www-data" WITH NOSUPERUSER INHERIT NOCREATEROLE NOCREATEDB LOGIN NOREPLICATION;
+
+
+
+
+
+
+--
+-- Database creation
+--
+
+CREATE DATABASE "zenetude_base" WITH TEMPLATE = template0 OWNER = "www-data";
+CREATE DATABASE "SCOUSERS" WITH TEMPLATE = template0 OWNER = "www-data";
+REVOKE ALL ON DATABASE template1 FROM PUBLIC;
+REVOKE ALL ON DATABASE template1 FROM postgres;
+GRANT ALL ON DATABASE template1 TO postgres;
+GRANT CONNECT ON DATABASE template1 TO PUBLIC;
+
+
+\connect "zenetude_base"
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+--
+-- Name: abs_newid(text); Type: FUNCTION; Schema: public; Owner: www-data
+--
+
+CREATE FUNCTION abs_newid(text) RETURNS text
+    LANGUAGE sql
+    AS $_$
+	select $1 || to_char(  nextval('abs_idgen'), 'FM999999999' ) 
+	as result;
+	$_$;
+
+
+ALTER FUNCTION public.abs_newid(text) OWNER TO "www-data";
+
+--
+-- Name: notes_newid(text); Type: FUNCTION; Schema: public; Owner: www-data
+--
+
+CREATE FUNCTION notes_newid(text) RETURNS text
+    LANGUAGE sql
+    AS $_$
+	select $1 || to_char(  nextval('notes_idgen'), 'FM999999999' ) 
+	as result;
+	$_$;
+
+
+ALTER FUNCTION public.notes_newid(text) OWNER TO "www-data";
+
+--
+-- Name: notes_newid2(text); Type: FUNCTION; Schema: public; Owner: www-data
+--
+
+CREATE FUNCTION notes_newid2(text) RETURNS text
+    LANGUAGE sql
+    AS $_$
+	select $1 || to_char(  nextval('notes_idgen2'), 'FM999999999' ) 
+	as result;
+	$_$;
+
+
+ALTER FUNCTION public.notes_newid2(text) OWNER TO "www-data";
+
+--
+-- Name: notes_newid_billet(text); Type: FUNCTION; Schema: public; Owner: www-data
+--
+
+CREATE FUNCTION notes_newid_billet(text) RETURNS text
+    LANGUAGE sql
+    AS $_$
+	select $1 || to_char(  nextval('notes_idgen_billets'), 'FM999999999' ) 
+	as result;
+	$_$;
+
+
+ALTER FUNCTION public.notes_newid_billet(text) OWNER TO "www-data";
+
+--
+-- Name: notes_newid_etud(text); Type: FUNCTION; Schema: public; Owner: www-data
+--
+
+CREATE FUNCTION notes_newid_etud(text) RETURNS text
+    LANGUAGE sql
+    AS $_$
+	select $1 || to_char(  nextval('notes_idgen_etud'), 'FM999999999' ) 
+	as result;
+	$_$;
+
+
+ALTER FUNCTION public.notes_newid_etud(text) OWNER TO "www-data";
+
+--
+-- Name: notes_newid_fcod(text); Type: FUNCTION; Schema: public; Owner: www-data
+--
+
+CREATE FUNCTION notes_newid_fcod(text) RETURNS text
+    LANGUAGE sql
+    AS $_$
+	select $1 || to_char(  nextval('notes_idgen_fcod'), 'FM999999999' ) 
+	as result;
+	$_$;
+
+
+ALTER FUNCTION public.notes_newid_fcod(text) OWNER TO "www-data";
+
+--
+-- Name: notes_newidsvalid(text); Type: FUNCTION; Schema: public; Owner: www-data
+--
+
+CREATE FUNCTION notes_newidsvalid(text) RETURNS text
+    LANGUAGE sql
+    AS $_$
+	select $1 || to_char(  nextval('notes_idgen_svalid'), 'FM999999999' ) 
+	as result;
+	$_$;
+
+
+ALTER FUNCTION public.notes_newidsvalid(text) OWNER TO "www-data";
+
+SET default_tablespace = '';
+
+SET default_with_oids = true;
+
+--
+-- Name: abs_absences; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE abs_absences (
+    absid text DEFAULT abs_newid('AB'::text) NOT NULL,
+    etudid character(32),
+    abs_begin timestamp with time zone,
+    abs_end timestamp with time zone
+);
+
+
+ALTER TABLE public.abs_absences OWNER TO "www-data";
+
+--
+-- Name: abs_idgen; Type: SEQUENCE; Schema: public; Owner: www-data
+--
+
+CREATE SEQUENCE abs_idgen
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.abs_idgen OWNER TO "www-data";
+
+--
+-- Name: abs_justifs; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE abs_justifs (
+    absid text DEFAULT abs_newid('JU'::text) NOT NULL,
+    etudid character(32),
+    abs_begin timestamp with time zone,
+    abs_end timestamp with time zone,
+    category text,
+    description text
+);
+
+
+ALTER TABLE public.abs_justifs OWNER TO "www-data";
+
+--
+-- Name: abs_presences; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE abs_presences (
+    absid text DEFAULT abs_newid('PR'::text) NOT NULL,
+    etudid character(32),
+    abs_begin timestamp with time zone,
+    abs_end timestamp with time zone
+);
+
+
+ALTER TABLE public.abs_presences OWNER TO "www-data";
+
+--
+-- Name: absences; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE absences (
+    etudid text NOT NULL,
+    jour date,
+    estabs boolean,
+    estjust boolean,
+    matin boolean,
+    description text,
+    entry_date timestamp with time zone DEFAULT now(),
+    moduleimpl_id text
+);
+
+
+ALTER TABLE public.absences OWNER TO "www-data";
+
+--
+-- Name: absences_notifications; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE absences_notifications (
+    etudid text NOT NULL,
+    notification_date timestamp with time zone DEFAULT now(),
+    email text NOT NULL,
+    nbabs integer,
+    nbabsjust integer,
+    formsemestre_id text
+);
+
+
+ALTER TABLE public.absences_notifications OWNER TO "www-data";
+
+--
+-- Name: admissions; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE admissions (
+    adm_id text DEFAULT notes_newid_etud('ADM'::text) NOT NULL,
+    etudid text NOT NULL,
+    annee integer,
+    bac text,
+    specialite text,
+    annee_bac integer,
+    math real,
+    physique real,
+    anglais real,
+    francais real,
+    rang integer,
+    qualite real,
+    rapporteur text,
+    decision text,
+    score real,
+    commentaire text,
+    nomlycee text,
+    villelycee text,
+    codepostallycee text,
+    codelycee text,
+    debouche text,
+    type_admission text,
+    boursier_prec integer
+);
+
+
+ALTER TABLE public.admissions OWNER TO "www-data";
+
+--
+-- Name: adresse; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE adresse (
+    adresse_id text DEFAULT notes_newid_etud('ADR'::text) NOT NULL,
+    etudid text NOT NULL,
+    email text,
+    domicile text,
+    codepostaldomicile text,
+    villedomicile text,
+    paysdomicile text,
+    telephone text,
+    telephonemobile text,
+    fax text,
+    typeadresse text DEFAULT 'domicile'::text NOT NULL,
+    entreprise_id integer,
+    description text
+);
+
+
+ALTER TABLE public.adresse OWNER TO "www-data";
+
+--
+-- Name: billet_absence; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE billet_absence (
+    billet_id text DEFAULT notes_newid_billet('B'::text) NOT NULL,
+    etudid text NOT NULL,
+    abs_begin timestamp with time zone,
+    abs_end timestamp with time zone,
+    description text,
+    etat integer DEFAULT 0,
+    entry_date timestamp with time zone DEFAULT now(),
+    justified integer DEFAULT 0
+);
+
+
+ALTER TABLE public.billet_absence OWNER TO "www-data";
+
+--
+-- Name: entreprise_contact; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE entreprise_contact (
+    entreprise_contact_id integer NOT NULL,
+    date date,
+    type_contact text,
+    entreprise_id integer,
+    entreprise_corresp_id integer,
+    etudid text,
+    description text,
+    enseignant text
+);
+
+
+ALTER TABLE public.entreprise_contact OWNER TO "www-data";
+
+--
+-- Name: entreprise_contact_entreprise_contact_id_seq; Type: SEQUENCE; Schema: public; Owner: www-data
+--
+
+CREATE SEQUENCE entreprise_contact_entreprise_contact_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.entreprise_contact_entreprise_contact_id_seq OWNER TO "www-data";
+
+--
+-- Name: entreprise_contact_entreprise_contact_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: www-data
+--
+
+ALTER SEQUENCE entreprise_contact_entreprise_contact_id_seq OWNED BY entreprise_contact.entreprise_contact_id;
+
+
+--
+-- Name: entreprise_correspondant; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE entreprise_correspondant (
+    entreprise_corresp_id integer NOT NULL,
+    nom text,
+    prenom text,
+    fonction text,
+    phone1 text,
+    phone2 text,
+    mobile text,
+    mail1 text,
+    mail2 text,
+    note text,
+    entreprise_id integer,
+    civilite text,
+    fax text
+);
+
+
+ALTER TABLE public.entreprise_correspondant OWNER TO "www-data";
+
+--
+-- Name: entreprise_correspondant_entreprise_corresp_id_seq; Type: SEQUENCE; Schema: public; Owner: www-data
+--
+
+CREATE SEQUENCE entreprise_correspondant_entreprise_corresp_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.entreprise_correspondant_entreprise_corresp_id_seq OWNER TO "www-data";
+
+--
+-- Name: entreprise_correspondant_entreprise_corresp_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: www-data
+--
+
+ALTER SEQUENCE entreprise_correspondant_entreprise_corresp_id_seq OWNED BY entreprise_correspondant.entreprise_corresp_id;
+
+
+--
+-- Name: entreprises; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE entreprises (
+    entreprise_id integer NOT NULL,
+    nom text,
+    adresse text,
+    ville text,
+    codepostal text,
+    pays text,
+    contact_origine text,
+    secteur text,
+    note text,
+    privee text,
+    localisation text,
+    qualite_relation integer,
+    plus10salaries integer,
+    date_creation timestamp without time zone DEFAULT now()
+);
+
+
+ALTER TABLE public.entreprises OWNER TO "www-data";
+
+--
+-- Name: entreprises_entreprise_id_seq; Type: SEQUENCE; Schema: public; Owner: www-data
+--
+
+CREATE SEQUENCE entreprises_entreprise_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.entreprises_entreprise_id_seq OWNER TO "www-data";
+
+--
+-- Name: entreprises_entreprise_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: www-data
+--
+
+ALTER SEQUENCE entreprises_entreprise_id_seq OWNED BY entreprises.entreprise_id;
+
+
+--
+-- Name: etud_annotations; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE etud_annotations (
+    id integer DEFAULT nextval(('serial'::text)::regclass) NOT NULL,
+    date timestamp without time zone DEFAULT now(),
+    etudid character(32),
+    author text,
+    comment text,
+    zope_authenticated_user text,
+    zope_remote_addr text
+);
+
+
+ALTER TABLE public.etud_annotations OWNER TO "www-data";
+
+--
+-- Name: group_descr; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE group_descr (
+    group_id text DEFAULT notes_newid2('G'::text) NOT NULL,
+    partition_id text,
+    group_name text
+);
+
+
+ALTER TABLE public.group_descr OWNER TO "www-data";
+
+--
+-- Name: group_membership; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE group_membership (
+    group_membership_id text DEFAULT notes_newid2('GM'::text) NOT NULL,
+    etudid text,
+    group_id text
+);
+
+
+ALTER TABLE public.group_membership OWNER TO "www-data";
+
+--
+-- Name: identite; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE identite (
+    etudid text DEFAULT notes_newid_etud('EID'::text) NOT NULL,
+    nom text,
+    prenom text,
+    sexe text,
+    date_naissance date,
+    lieu_naissance text,
+    nationalite text,
+    statut text,
+    foto text,
+    photo_filename text,
+    code_nip text,
+    code_ine text,
+    nom_usuel text
+);
+
+
+ALTER TABLE public.identite OWNER TO "www-data";
+
+--
+-- Name: notes_appreciations; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE notes_appreciations (
+    id integer DEFAULT nextval(('serial'::text)::regclass) NOT NULL,
+    date timestamp without time zone DEFAULT now(),
+    etudid text,
+    formsemestre_id text,
+    author text,
+    comment text,
+    zope_authenticated_user text,
+    zope_remote_addr text
+);
+
+
+ALTER TABLE public.notes_appreciations OWNER TO "www-data";
+
+--
+-- Name: notes_evaluation; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE notes_evaluation (
+    evaluation_id text DEFAULT notes_newid('EVAL'::text) NOT NULL,
+    moduleimpl_id text,
+    jour date,
+    heure_debut time without time zone,
+    heure_fin time without time zone,
+    description text,
+    note_max real,
+    coefficient real,
+    visibulletin integer DEFAULT 1,
+    publish_incomplete integer DEFAULT 0,
+    evaluation_type integer DEFAULT 0,
+    numero integer
+);
+
+
+ALTER TABLE public.notes_evaluation OWNER TO "www-data";
+
+SET default_with_oids = false;
+
+--
+-- Name: notes_form_modalites; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE notes_form_modalites (
+    form_modalite_id text DEFAULT notes_newid('Md'::text) NOT NULL,
+    modalite text,
+    titre text,
+    numero integer NOT NULL
+);
+
+
+ALTER TABLE public.notes_form_modalites OWNER TO "www-data";
+
+--
+-- Name: notes_form_modalites_numero_seq; Type: SEQUENCE; Schema: public; Owner: www-data
+--
+
+CREATE SEQUENCE notes_form_modalites_numero_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.notes_form_modalites_numero_seq OWNER TO "www-data";
+
+--
+-- Name: notes_form_modalites_numero_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: www-data
+--
+
+ALTER SEQUENCE notes_form_modalites_numero_seq OWNED BY notes_form_modalites.numero;
+
+
+SET default_with_oids = true;
+
+--
+-- Name: notes_formations; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE notes_formations (
+    formation_id text DEFAULT notes_newid('FORM'::text) NOT NULL,
+    acronyme text NOT NULL,
+    titre text NOT NULL,
+    titre_officiel text NOT NULL,
+    version integer DEFAULT 1,
+    formation_code text DEFAULT notes_newid_fcod('FCOD'::text) NOT NULL,
+    type_parcours integer DEFAULT 0
+);
+
+
+ALTER TABLE public.notes_formations OWNER TO "www-data";
+
+--
+-- Name: notes_formsemestre; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE notes_formsemestre (
+    formsemestre_id text DEFAULT notes_newid('SEM'::text) NOT NULL,
+    formation_id text,
+    semestre_id integer,
+    titre text,
+    date_debut date,
+    date_fin date,
+    responsable_id text,
+    etat integer DEFAULT 1,
+    gestion_compensation integer DEFAULT 0,
+    bul_hide_xml integer DEFAULT 0,
+    gestion_semestrielle integer DEFAULT 0,
+    bul_bgcolor text DEFAULT 'white'::text,
+    etape_apo text,
+    etape_apo2 text,
+    etape_apo3 text,
+    etape_apo4 text,
+    modalite text,
+    resp_can_edit integer DEFAULT 0,
+    resp_can_change_ens integer DEFAULT 1,
+    ens_can_edit_eval integer DEFAULT 0
+);
+
+
+ALTER TABLE public.notes_formsemestre OWNER TO "www-data";
+
+--
+-- Name: notes_formsemestre_custommenu; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE notes_formsemestre_custommenu (
+    custommenu_id text DEFAULT notes_newid('CMENU'::text) NOT NULL,
+    formsemestre_id text,
+    title text,
+    url text,
+    idx integer DEFAULT 0
+);
+
+
+ALTER TABLE public.notes_formsemestre_custommenu OWNER TO "www-data";
+
+--
+-- Name: notes_formsemestre_inscription; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE notes_formsemestre_inscription (
+    formsemestre_inscription_id text DEFAULT notes_newid2('SI'::text) NOT NULL,
+    etudid text,
+    formsemestre_id text,
+    etat text
+);
+
+
+ALTER TABLE public.notes_formsemestre_inscription OWNER TO "www-data";
+
+--
+-- Name: notes_formsemestre_ue_computation_expr; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE notes_formsemestre_ue_computation_expr (
+    notes_formsemestre_ue_computation_expr_id text DEFAULT notes_newid('UEXPR'::text) NOT NULL,
+    formsemestre_id text,
+    ue_id text,
+    computation_expr text
+);
+
+
+ALTER TABLE public.notes_formsemestre_ue_computation_expr OWNER TO "www-data";
+
+--
+-- Name: notes_formsemestre_uecoef; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE notes_formsemestre_uecoef (
+    formsemestre_uecoef_id text DEFAULT notes_newid('SEM'::text) NOT NULL,
+    formsemestre_id text,
+    ue_id text,
+    coefficient real NOT NULL
+);
+
+
+ALTER TABLE public.notes_formsemestre_uecoef OWNER TO "www-data";
+
+--
+-- Name: notes_idgen; Type: SEQUENCE; Schema: public; Owner: www-data
+--
+
+CREATE SEQUENCE notes_idgen
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.notes_idgen OWNER TO "www-data";
+
+--
+-- Name: notes_idgen2; Type: SEQUENCE; Schema: public; Owner: www-data
+--
+
+CREATE SEQUENCE notes_idgen2
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.notes_idgen2 OWNER TO "www-data";
+
+--
+-- Name: notes_idgen_billets; Type: SEQUENCE; Schema: public; Owner: www-data
+--
+
+CREATE SEQUENCE notes_idgen_billets
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.notes_idgen_billets OWNER TO "www-data";
+
+--
+-- Name: notes_idgen_etud; Type: SEQUENCE; Schema: public; Owner: www-data
+--
+
+CREATE SEQUENCE notes_idgen_etud
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.notes_idgen_etud OWNER TO "www-data";
+
+--
+-- Name: notes_idgen_fcod; Type: SEQUENCE; Schema: public; Owner: www-data
+--
+
+CREATE SEQUENCE notes_idgen_fcod
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.notes_idgen_fcod OWNER TO "www-data";
+
+--
+-- Name: notes_idgen_svalid; Type: SEQUENCE; Schema: public; Owner: www-data
+--
+
+CREATE SEQUENCE notes_idgen_svalid
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.notes_idgen_svalid OWNER TO "www-data";
+
+--
+-- Name: notes_matieres; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE notes_matieres (
+    matiere_id text DEFAULT notes_newid('MAT'::text) NOT NULL,
+    ue_id text,
+    titre text,
+    numero integer
+);
+
+
+ALTER TABLE public.notes_matieres OWNER TO "www-data";
+
+--
+-- Name: notes_moduleimpl; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE notes_moduleimpl (
+    moduleimpl_id text DEFAULT notes_newid('MIP'::text) NOT NULL,
+    module_id text,
+    formsemestre_id text,
+    responsable_id text,
+    computation_expr text
+);
+
+
+ALTER TABLE public.notes_moduleimpl OWNER TO "www-data";
+
+--
+-- Name: notes_moduleimpl_inscription; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE notes_moduleimpl_inscription (
+    moduleimpl_inscription_id text DEFAULT notes_newid2('MI'::text) NOT NULL,
+    moduleimpl_id text,
+    etudid text
+);
+
+
+ALTER TABLE public.notes_moduleimpl_inscription OWNER TO "www-data";
+
+--
+-- Name: notes_modules; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE notes_modules (
+    module_id text DEFAULT notes_newid('MOD'::text) NOT NULL,
+    titre text,
+    code text,
+    heures_cours real,
+    heures_td real,
+    heures_tp real,
+    coefficient real,
+    ue_id text,
+    formation_id text,
+    matiere_id text,
+    semestre_id integer,
+    numero integer,
+    abbrev text,
+    ects real
+);
+
+
+ALTER TABLE public.notes_modules OWNER TO "www-data";
+
+--
+-- Name: notes_modules_enseignants; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE notes_modules_enseignants (
+    modules_enseignants_id text DEFAULT notes_newid('ENS'::text) NOT NULL,
+    moduleimpl_id text,
+    ens_id text
+);
+
+
+ALTER TABLE public.notes_modules_enseignants OWNER TO "www-data";
+
+--
+-- Name: notes_notes; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE notes_notes (
+    etudid text,
+    evaluation_id text,
+    value real,
+    comment text,
+    date timestamp without time zone DEFAULT now(),
+    uid text
+);
+
+
+ALTER TABLE public.notes_notes OWNER TO "www-data";
+
+--
+-- Name: notes_notes_log; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE notes_notes_log (
+    id integer NOT NULL,
+    etudid text,
+    evaluation_id text,
+    value real,
+    comment text,
+    date timestamp without time zone,
+    uid text
+);
+
+
+ALTER TABLE public.notes_notes_log OWNER TO "www-data";
+
+--
+-- Name: notes_notes_log_id_seq; Type: SEQUENCE; Schema: public; Owner: www-data
+--
+
+CREATE SEQUENCE notes_notes_log_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.notes_notes_log_id_seq OWNER TO "www-data";
+
+--
+-- Name: notes_notes_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: www-data
+--
+
+ALTER SEQUENCE notes_notes_log_id_seq OWNED BY notes_notes_log.id;
+
+
+--
+-- Name: notes_semestres; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE notes_semestres (
+    semestre_id integer NOT NULL
+);
+
+
+ALTER TABLE public.notes_semestres OWNER TO "www-data";
+
+--
+-- Name: notes_ue; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE notes_ue (
+    ue_id text DEFAULT notes_newid('UE'::text) NOT NULL,
+    formation_id text,
+    acronyme text NOT NULL,
+    numero integer,
+    titre text,
+    type integer DEFAULT 0,
+    ue_code text DEFAULT notes_newid_fcod('UCOD'::text) NOT NULL,
+    ects real
+);
+
+
+ALTER TABLE public.notes_ue OWNER TO "www-data";
+
+--
+-- Name: partition; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE partition (
+    partition_id text DEFAULT notes_newid2('P'::text) NOT NULL,
+    formsemestre_id text,
+    partition_name text,
+    compute_ranks integer DEFAULT 1,
+    numero integer NOT NULL,
+    bul_show_rank integer DEFAULT 0
+);
+
+
+ALTER TABLE public.partition OWNER TO "www-data";
+
+--
+-- Name: partition_numero_seq; Type: SEQUENCE; Schema: public; Owner: www-data
+--
+
+CREATE SEQUENCE partition_numero_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.partition_numero_seq OWNER TO "www-data";
+
+--
+-- Name: partition_numero_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: www-data
+--
+
+ALTER SEQUENCE partition_numero_seq OWNED BY partition.numero;
+
+
+--
+-- Name: sco_prefs; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE sco_prefs (
+    pref_id text DEFAULT notes_newid('PREF'::text) NOT NULL,
+    name text NOT NULL,
+    value text,
+    formsemestre_id text
+);
+
+
+ALTER TABLE public.sco_prefs OWNER TO "www-data";
+
+--
+-- Name: scolar_autorisation_inscription; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE scolar_autorisation_inscription (
+    autorisation_inscription_id text DEFAULT notes_newidsvalid('AUT'::text) NOT NULL,
+    etudid text NOT NULL,
+    formation_code text NOT NULL,
+    semestre_id integer,
+    date timestamp without time zone DEFAULT now(),
+    origin_formsemestre_id text
+);
+
+
+ALTER TABLE public.scolar_autorisation_inscription OWNER TO "www-data";
+
+--
+-- Name: scolar_events; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE scolar_events (
+    event_id text DEFAULT notes_newid('EVT'::text) NOT NULL,
+    etudid text,
+    event_date timestamp without time zone DEFAULT now(),
+    formsemestre_id text,
+    ue_id text,
+    event_type text,
+    comp_formsemestre_id text
+);
+
+
+ALTER TABLE public.scolar_events OWNER TO "www-data";
+
+--
+-- Name: scolar_formsemestre_validation; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE scolar_formsemestre_validation (
+    formsemestre_validation_id text DEFAULT notes_newidsvalid('VAL'::text) NOT NULL,
+    etudid text NOT NULL,
+    formsemestre_id text,
+    ue_id text,
+    code text NOT NULL,
+    assidu integer,
+    event_date timestamp without time zone DEFAULT now(),
+    compense_formsemestre_id text,
+    moy_ue real,
+    semestre_id integer
+);
+
+
+ALTER TABLE public.scolar_formsemestre_validation OWNER TO "www-data";
+
+--
+-- Name: scolar_news; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE scolar_news (
+    news_id text DEFAULT notes_newid('NEWS'::text) NOT NULL,
+    date timestamp without time zone DEFAULT now(),
+    authenticated_user text,
+    type text,
+    object text,
+    text text,
+    url text
+);
+
+
+ALTER TABLE public.scolar_news OWNER TO "www-data";
+
+--
+-- Name: scolog; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE scolog (
+    date timestamp without time zone DEFAULT now(),
+    authenticated_user text,
+    remote_addr text,
+    remote_host text,
+    method text,
+    etudid character(32),
+    msg text
+);
+
+
+ALTER TABLE public.scolog OWNER TO "www-data";
+
+--
+-- Name: serial; Type: SEQUENCE; Schema: public; Owner: www-data
+--
+
+CREATE SEQUENCE serial
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.serial OWNER TO "www-data";
+
+--
+-- Name: entreprise_contact_id; Type: DEFAULT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY entreprise_contact ALTER COLUMN entreprise_contact_id SET DEFAULT nextval('entreprise_contact_entreprise_contact_id_seq'::regclass);
+
+
+--
+-- Name: entreprise_corresp_id; Type: DEFAULT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY entreprise_correspondant ALTER COLUMN entreprise_corresp_id SET DEFAULT nextval('entreprise_correspondant_entreprise_corresp_id_seq'::regclass);
+
+
+--
+-- Name: entreprise_id; Type: DEFAULT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY entreprises ALTER COLUMN entreprise_id SET DEFAULT nextval('entreprises_entreprise_id_seq'::regclass);
+
+
+--
+-- Name: numero; Type: DEFAULT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY notes_form_modalites ALTER COLUMN numero SET DEFAULT nextval('notes_form_modalites_numero_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY notes_notes_log ALTER COLUMN id SET DEFAULT nextval('notes_notes_log_id_seq'::regclass);
+
+
+--
+-- Name: numero; Type: DEFAULT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY partition ALTER COLUMN numero SET DEFAULT nextval('partition_numero_seq'::regclass);
+
+
+--
+-- Data for Name: abs_absences; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY abs_absences (absid, etudid, abs_begin, abs_end) FROM stdin;
+\.
+
+
+--
+-- Name: abs_idgen; Type: SEQUENCE SET; Schema: public; Owner: www-data
+--
+
+SELECT pg_catalog.setval('abs_idgen', 1, false);
+
+
+--
+-- Data for Name: abs_justifs; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY abs_justifs (absid, etudid, abs_begin, abs_end, category, description) FROM stdin;
+\.
+
+
+--
+-- Data for Name: abs_presences; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY abs_presences (absid, etudid, abs_begin, abs_end) FROM stdin;
+\.
+
+
+--
+-- Data for Name: absences; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY absences (etudid, jour, estabs, estjust, matin, description, entry_date, moduleimpl_id) FROM stdin;
+EID4	2017-11-13	t	f	t		2017-12-05 12:52:31.849549+01	
+EID4	2017-11-13	t	f	f		2017-12-05 12:52:33.874007+01	
+EID4	2017-11-14	t	f	t		2017-12-05 12:52:34.971335+01	
+EID4	2017-11-15	t	f	t		2017-12-05 12:52:36.138008+01	
+EID4	2017-11-14	t	f	f		2017-12-05 12:53:00.863039+01	MIP414
+EID4	2017-11-15	t	f	t		2017-12-05 12:53:01.677236+01	MIP414
+EID4	2017-11-15	t	f	f		2017-12-05 12:53:08.340341+01	MIP414
+EID7	2017-12-11	t	f	t		2018-04-02 21:40:32.518245+02	
+EID10	2017-12-11	t	f	t		2018-04-02 21:40:33.307713+02	
+EID10	2017-12-04	t	f	f		2018-04-02 21:45:23.381535+02	
+EID7	2017-12-04	t	f	f		2018-04-02 21:45:23.686092+02	
+EID7	2017-12-05	t	f	t		2018-04-02 21:45:24.187333+02	
+EID10	2017-12-05	t	f	t		2018-04-02 21:45:24.850082+02	
+EID7	2018-04-09	t	f	f		2018-04-02 22:01:35.371373+02	
+EID10	2018-04-09	t	f	f		2018-04-02 22:01:36.112104+02	
+EID7	2018-04-12	t	f	f		2018-04-02 22:01:36.901627+02	
+EID10	2018-04-12	t	f	f		2018-04-02 22:01:37.256527+02	
+EID7	2018-04-13	t	f	t		2018-04-02 22:01:38.09573+02	
+EID10	2018-04-13	t	f	t		2018-04-02 22:01:38.71214+02	
+EID7	2018-04-11	t	f	t		2018-04-02 23:06:15.433369+02	
+EID10	2018-04-11	t	f	t		2018-04-02 23:06:15.850697+02	
+EID10	2018-04-11	t	f	f		2018-04-02 23:06:16.399319+02	
+EID7	2018-04-11	t	f	f		2018-04-02 23:06:16.717405+02	
+EID7	2018-04-12	t	f	t		2018-04-02 23:06:17.211232+02	
+EID10	2018-04-12	t	f	t		2018-04-02 23:06:17.623716+02	
+EID10	2018-04-10	t	f	f		2018-04-02 23:06:18.337098+02	
+EID7	2018-04-10	t	f	f		2018-04-02 23:06:18.667837+02	
+EID7	2018-04-10	t	f	t		2018-04-02 23:06:19.281948+02	
+EID10	2018-04-10	t	f	t		2018-04-02 23:06:19.76259+02	
+\.
+
+
+--
+-- Data for Name: absences_notifications; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY absences_notifications (etudid, notification_date, email, nbabs, nbabsjust, formsemestre_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: admissions; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY admissions (adm_id, etudid, annee, bac, specialite, annee_bac, math, physique, anglais, francais, rang, qualite, rapporteur, decision, score, commentaire, nomlycee, villelycee, codepostallycee, codelycee, debouche, type_admission, boursier_prec) FROM stdin;
+ADM2	EID1	2013	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	ADMIS	\N	\N	\N	\N	\N	\N	\N	Inconnue	0
+ADM5	EID4	2014	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N
+ADM8	EID7	2014	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N
+ADM11	EID10	2014	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N
+\.
+
+
+--
+-- Data for Name: adresse; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY adresse (adresse_id, etudid, email, domicile, codepostaldomicile, villedomicile, paysdomicile, telephone, telephonemobile, fax, typeadresse, entreprise_id, description) FROM stdin;
+ADR3	EID1	\N	\N	\N	\N	\N	\N	\N	\N	domicile	\N	(creation individuelle)
+ADR6	EID4	\N	\N	\N	\N	\N	\N	\N	\N	domicile	\N	(infos admission)
+ADR9	EID7	\N	\N	\N	\N	\N	\N	\N	\N	domicile	\N	(infos admission)
+ADR12	EID10	\N	\N	\N	\N	\N	\N	\N	\N	domicile	\N	(infos admission)
+\.
+
+
+--
+-- Data for Name: billet_absence; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY billet_absence (billet_id, etudid, abs_begin, abs_end, description, etat, entry_date, justified) FROM stdin;
+\.
+
+
+--
+-- Data for Name: entreprise_contact; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY entreprise_contact (entreprise_contact_id, date, type_contact, entreprise_id, entreprise_corresp_id, etudid, description, enseignant) FROM stdin;
+\.
+
+
+--
+-- Name: entreprise_contact_entreprise_contact_id_seq; Type: SEQUENCE SET; Schema: public; Owner: www-data
+--
+
+SELECT pg_catalog.setval('entreprise_contact_entreprise_contact_id_seq', 1, false);
+
+
+--
+-- Data for Name: entreprise_correspondant; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY entreprise_correspondant (entreprise_corresp_id, nom, prenom, fonction, phone1, phone2, mobile, mail1, mail2, note, entreprise_id, civilite, fax) FROM stdin;
+\.
+
+
+--
+-- Name: entreprise_correspondant_entreprise_corresp_id_seq; Type: SEQUENCE SET; Schema: public; Owner: www-data
+--
+
+SELECT pg_catalog.setval('entreprise_correspondant_entreprise_corresp_id_seq', 1, false);
+
+
+--
+-- Data for Name: entreprises; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY entreprises (entreprise_id, nom, adresse, ville, codepostal, pays, contact_origine, secteur, note, privee, localisation, qualite_relation, plus10salaries, date_creation) FROM stdin;
+\.
+
+
+--
+-- Name: entreprises_entreprise_id_seq; Type: SEQUENCE SET; Schema: public; Owner: www-data
+--
+
+SELECT pg_catalog.setval('entreprises_entreprise_id_seq', 1, false);
+
+
+--
+-- Data for Name: etud_annotations; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY etud_annotations (id, date, etudid, author, comment, zope_authenticated_user, zope_remote_addr) FROM stdin;
+\.
+
+
+--
+-- Data for Name: group_descr; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY group_descr (group_id, partition_id, group_name) FROM stdin;
+G2	P1	\N
+G79	P71	A
+G80	P71	B
+G86	P85	\N
+G133	P132	A
+G134	P132	B
+\.
+
+
+--
+-- Data for Name: group_membership; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY group_membership (group_membership_id, etudid, group_id) FROM stdin;
+GM4	EID1	G2
+GM21	EID4	G2
+GM38	EID7	G2
+GM55	EID10	G2
+GM81	EID7	G79
+GM82	EID4	G80
+GM83	EID10	G79
+GM84	EID1	G80
+GM88	EID7	G86
+GM103	EID4	G86
+GM118	EID10	G86
+GM149	EID7	G133
+GM164	EID4	G134
+GM179	EID10	G133
+\.
+
+
+--
+-- Data for Name: identite; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY identite (etudid, nom, prenom, sexe, date_naissance, lieu_naissance, nationalite, statut, foto, photo_filename, code_nip, code_ine, nom_usuel) FROM stdin;
+EID1	DUPONT	GEORGES	MR	\N	\N	\N	\N	\N	\N	\N	\N	\N
+EID4	DURAND	JEAN	MR	\N	\N	\N	\N	\N	\N	\N	\N	\N
+EID7	BOOP	BETTY	MME	\N	\N	\N	\N	\N	\N	\N	\N	\N
+EID10	SAVOITUREDANS LE GARAGE	YGOR	MR	\N	\N	\N	\N	\N	\N	\N	\N	\N
+\.
+
+
+--
+-- Data for Name: notes_appreciations; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY notes_appreciations (id, date, etudid, formsemestre_id, author, comment, zope_authenticated_user, zope_remote_addr) FROM stdin;
+\.
+
+
+--
+-- Data for Name: notes_evaluation; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY notes_evaluation (evaluation_id, moduleimpl_id, jour, heure_debut, heure_fin, description, note_max, coefficient, visibulletin, publish_incomplete, evaluation_type, numero) FROM stdin;
+EVAL408	MIP386	2013-12-10	08:00:00	10:00:00	DS 1	20	1	1	0	0	0
+\.
+
+
+--
+-- Data for Name: notes_form_modalites; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY notes_form_modalites (form_modalite_id, modalite, titre, numero) FROM stdin;
+Md1		Autres formations	1
+Md2	FI	Formation Initiale	2
+Md3	FC	Formation Continue	3
+Md4	FAP	Apprentissage	4
+Md5	DEC	Formation Décalées	5
+Md6	LIC	Licence	6
+\.
+
+
+--
+-- Name: notes_form_modalites_numero_seq; Type: SEQUENCE SET; Schema: public; Owner: www-data
+--
+
+SELECT pg_catalog.setval('notes_form_modalites_numero_seq', 6, true);
+
+
+--
+-- Data for Name: notes_formations; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY notes_formations (formation_id, acronyme, titre, titre_officiel, version, formation_code, type_parcours) FROM stdin;
+FORM94	DUT GEII	DUT Génie Electrique et Informatique Industrielle	DUT Génie Electrique et Informatique Industrielle	1	DUTGEII	100
+\.
+
+
+--
+-- Data for Name: notes_formsemestre; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY notes_formsemestre (formsemestre_id, formation_id, semestre_id, titre, date_debut, date_fin, responsable_id, etat, gestion_compensation, bul_hide_xml, gestion_semestrielle, bul_bgcolor, etape_apo, etape_apo2, etape_apo3, etape_apo4, modalite, resp_can_edit, resp_can_change_ens, ens_can_edit_eval) FROM stdin;
+SEM384	FORM94	1	DUT Génie Electrique et Informatique Industrielle	2013-09-01	2014-01-31	demo	1	1	0	1	\N	\N	\N	\N	\N	FI	1	1	1
+SEM411	FORM94	2	DUT Génie Electrique et Informatique Industrielle	2014-02-01	2014-06-30	demo	1	1	0	1	\N	\N	\N	\N	\N	FI	1	1	1
+\.
+
+
+--
+-- Data for Name: notes_formsemestre_custommenu; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY notes_formsemestre_custommenu (custommenu_id, formsemestre_id, title, url, idx) FROM stdin;
+\.
+
+
+--
+-- Data for Name: notes_formsemestre_inscription; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY notes_formsemestre_inscription (formsemestre_inscription_id, etudid, formsemestre_id, etat) FROM stdin;
+SI3	EID1	SEM384	I
+SI20	EID4	SEM384	I
+SI37	EID7	SEM384	I
+SI54	EID10	SEM384	I
+SI135	EID7	SEM411	I
+SI150	EID4	SEM411	I
+SI165	EID10	SEM411	I
+\.
+
+
+--
+-- Data for Name: notes_formsemestre_ue_computation_expr; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY notes_formsemestre_ue_computation_expr (notes_formsemestre_ue_computation_expr_id, formsemestre_id, ue_id, computation_expr) FROM stdin;
+\.
+
+
+--
+-- Data for Name: notes_formsemestre_uecoef; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY notes_formsemestre_uecoef (formsemestre_uecoef_id, formsemestre_id, ue_id, coefficient) FROM stdin;
+\.
+
+
+--
+-- Name: notes_idgen; Type: SEQUENCE SET; Schema: public; Owner: www-data
+--
+
+SELECT pg_catalog.setval('notes_idgen', 433, true);
+
+
+--
+-- Name: notes_idgen2; Type: SEQUENCE SET; Schema: public; Owner: www-data
+--
+
+SELECT pg_catalog.setval('notes_idgen2', 179, true);
+
+
+--
+-- Name: notes_idgen_billets; Type: SEQUENCE SET; Schema: public; Owner: www-data
+--
+
+SELECT pg_catalog.setval('notes_idgen_billets', 1, false);
+
+
+--
+-- Name: notes_idgen_etud; Type: SEQUENCE SET; Schema: public; Owner: www-data
+--
+
+SELECT pg_catalog.setval('notes_idgen_etud', 12, true);
+
+
+--
+-- Name: notes_idgen_fcod; Type: SEQUENCE SET; Schema: public; Owner: www-data
+--
+
+SELECT pg_catalog.setval('notes_idgen_fcod', 1, false);
+
+
+--
+-- Name: notes_idgen_svalid; Type: SEQUENCE SET; Schema: public; Owner: www-data
+--
+
+SELECT pg_catalog.setval('notes_idgen_svalid', 20, true);
+
+
+--
+-- Data for Name: notes_matieres; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY notes_matieres (matiere_id, ue_id, titre, numero) FROM stdin;
+MAT98	UE96	Energie	111
+MAT102	UE96	Système d'information numérique	112
+MAT106	UE96	Informatique	113
+MAT110	UE96	Systèmes électroniques	114
+MAT116	UE114	Outils logiciels	121
+MAT120	UE114	Réalisation d'ensembles pluritechnologiques	122
+MAT124	UE114	Etudes et réalisation d'ensembles pluritechnologiques	123
+MAT128	UE114	Projet personnel et professionnel	124
+MAT132	UE114	Adaptation - Méthodologie pour la réussite universitaire	125
+MAT136	UE114	Initiation à la gestion de projet	126
+MAT140	UE114	Projet tutoré	127
+MAT146	UE144	Anglais	131
+MAT150	UE144	Mathématiques	132
+MAT154	UE144	Expression et Communication	133
+MAT158	UE144	Thermique - Mécanique	134
+MAT164	UE162	Sport	141
+MAT168	UE162	Actions de promotions	142
+MAT174	UE172	Energie	211
+MAT178	UE172	Automatisme	212
+MAT182	UE172	Informatique embarquée	213
+MAT186	UE172	Systèmes électroniques	214
+MAT192	UE190	Outils logiciels	221
+MAT196	UE190	Etudes et réalisation d'ensembles pluritechnologiques	223
+MAT200	UE190	Projet personnel et professionnel	224
+MAT204	UE190	Développement des compétences projet	226
+MAT208	UE190	Projet tutoré	227
+MAT214	UE212	Anglais	231
+MAT218	UE212	Mathématiques	232
+MAT222	UE212	Expression et Communication	233
+MAT226	UE212	Electromagnétisme - Capteur	234
+MAT232	UE230	Sport	241
+MAT236	UE230	Actions de promotions	242
+MAT242	UE240	Energie	311
+MAT246	UE240	Automatique	312
+MAT250	UE240	Réseaux	313
+MAT254	UE240	Systèmes électroniques	314
+MAT258	UE240	Programmation Orientée Objet	315
+MAT262	UE240	Energies renouvelables : production et stockage	316
+MAT268	UE266	Outils logiciels	321
+MAT272	UE266	Etudes et réalisation d'ensembles pluritechnologiques	323
+MAT276	UE266	Projet personnel et professionnel	324
+MAT280	UE266	Cycle de vie du produit	326
+MAT284	UE266	Projet tutoré	327
+MAT288	UE266	Supervision	328
+MAT294	UE292	Anglais	331
+MAT298	UE292	Mathématiques	332
+MAT302	UE292	Expression et Communication	333
+MAT306	UE292	Propagation - CEM	334
+MAT312	UE310	Sport	341
+MAT316	UE310	Actions de promotions	342
+MAT322	UE320	Stage	411
+MAT328	UE326	Etudes et réalisation d'ensembles pluritechnologiques	423
+MAT332	UE326	Projet personnel et professionnel	424
+MAT336	UE326	Projet tutoré	427
+MAT340	UE326	Composants complexes FPGA	429
+MAT344	UE326	Réseaux industriels	430
+MAT348	UE326	Traitement numérique du signal	431
+MAT352	UE326	Distribution électrique NFC 15-100	432
+MAT358	UE356	Anglais	431
+MAT362	UE356	Expression et Communication	433
+MAT366	UE356	Connaissance de l'entreprise	435
+MAT370	UE356	Maitrise Statistique des Procédés - Fiabilité	436
+MAT376	UE374	Sport	441
+MAT380	UE374	Actions de promotions	442
+\.
+
+
+--
+-- Data for Name: notes_moduleimpl; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY notes_moduleimpl (moduleimpl_id, module_id, formsemestre_id, responsable_id, computation_expr) FROM stdin;
+MIP386	MOD100	SEM384	demo	\N
+MIP387	MOD104	SEM384	demo	\N
+MIP388	MOD108	SEM384	demo	\N
+MIP389	MOD112	SEM384	demo	\N
+MIP390	MOD118	SEM384	demo	\N
+MIP391	MOD122	SEM384	demo	\N
+MIP392	MOD126	SEM384	demo	\N
+MIP393	MOD130	SEM384	demo	\N
+MIP394	MOD134	SEM384	demo	\N
+MIP395	MOD138	SEM384	demo	\N
+MIP396	MOD142	SEM384	demo	\N
+MIP397	MOD148	SEM384	demo	\N
+MIP398	MOD152	SEM384	demo	\N
+MIP399	MOD156	SEM384	demo	\N
+MIP400	MOD160	SEM384	demo	\N
+MIP401	MOD166	SEM384	demo	\N
+MIP402	MOD170	SEM384	demo	\N
+MIP413	MOD176	SEM411	demo	\N
+MIP414	MOD180	SEM411	demo	\N
+MIP415	MOD184	SEM411	demo	\N
+MIP416	MOD188	SEM411	demo	\N
+MIP417	MOD194	SEM411	demo	\N
+MIP418	MOD198	SEM411	demo	\N
+MIP419	MOD202	SEM411	demo	\N
+MIP420	MOD206	SEM411	demo	\N
+MIP421	MOD210	SEM411	demo	\N
+MIP422	MOD216	SEM411	demo	\N
+MIP423	MOD220	SEM411	demo	\N
+MIP424	MOD224	SEM411	demo	\N
+MIP425	MOD228	SEM411	demo	\N
+MIP426	MOD234	SEM411	demo	\N
+MIP427	MOD238	SEM411	demo	\N
+\.
+
+
+--
+-- Data for Name: notes_moduleimpl_inscription; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY notes_moduleimpl_inscription (moduleimpl_inscription_id, moduleimpl_id, etudid) FROM stdin;
+MI5	MIP386	EID1
+MI6	MIP387	EID1
+MI7	MIP388	EID1
+MI8	MIP389	EID1
+MI9	MIP390	EID1
+MI10	MIP391	EID1
+MI11	MIP392	EID1
+MI12	MIP393	EID1
+MI13	MIP394	EID1
+MI14	MIP395	EID1
+MI15	MIP396	EID1
+MI16	MIP397	EID1
+MI17	MIP398	EID1
+MI18	MIP399	EID1
+MI19	MIP400	EID1
+MI22	MIP386	EID4
+MI23	MIP387	EID4
+MI24	MIP388	EID4
+MI25	MIP389	EID4
+MI26	MIP390	EID4
+MI27	MIP391	EID4
+MI28	MIP392	EID4
+MI29	MIP393	EID4
+MI30	MIP394	EID4
+MI31	MIP395	EID4
+MI32	MIP396	EID4
+MI33	MIP397	EID4
+MI34	MIP398	EID4
+MI35	MIP399	EID4
+MI36	MIP400	EID4
+MI39	MIP386	EID7
+MI40	MIP387	EID7
+MI41	MIP388	EID7
+MI42	MIP389	EID7
+MI43	MIP390	EID7
+MI44	MIP391	EID7
+MI45	MIP392	EID7
+MI46	MIP393	EID7
+MI47	MIP394	EID7
+MI48	MIP395	EID7
+MI49	MIP396	EID7
+MI50	MIP397	EID7
+MI51	MIP398	EID7
+MI52	MIP399	EID7
+MI53	MIP400	EID7
+MI56	MIP386	EID10
+MI57	MIP387	EID10
+MI58	MIP388	EID10
+MI59	MIP389	EID10
+MI60	MIP390	EID10
+MI61	MIP391	EID10
+MI62	MIP392	EID10
+MI63	MIP393	EID10
+MI64	MIP394	EID10
+MI65	MIP395	EID10
+MI66	MIP396	EID10
+MI67	MIP397	EID10
+MI68	MIP398	EID10
+MI69	MIP399	EID10
+MI70	MIP400	EID10
+MI136	MIP413	EID7
+MI137	MIP414	EID7
+MI138	MIP415	EID7
+MI139	MIP416	EID7
+MI140	MIP417	EID7
+MI141	MIP418	EID7
+MI142	MIP419	EID7
+MI143	MIP420	EID7
+MI144	MIP421	EID7
+MI145	MIP422	EID7
+MI146	MIP423	EID7
+MI147	MIP424	EID7
+MI148	MIP425	EID7
+MI151	MIP413	EID4
+MI152	MIP414	EID4
+MI153	MIP415	EID4
+MI154	MIP416	EID4
+MI155	MIP417	EID4
+MI156	MIP418	EID4
+MI157	MIP419	EID4
+MI158	MIP420	EID4
+MI159	MIP421	EID4
+MI160	MIP422	EID4
+MI161	MIP423	EID4
+MI162	MIP424	EID4
+MI163	MIP425	EID4
+MI166	MIP413	EID10
+MI167	MIP414	EID10
+MI168	MIP415	EID10
+MI169	MIP416	EID10
+MI170	MIP417	EID10
+MI171	MIP418	EID10
+MI172	MIP419	EID10
+MI173	MIP420	EID10
+MI174	MIP421	EID10
+MI175	MIP422	EID10
+MI176	MIP423	EID10
+MI177	MIP424	EID10
+MI178	MIP425	EID10
+\.
+
+
+--
+-- Data for Name: notes_modules; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY notes_modules (module_id, titre, code, heures_cours, heures_td, heures_tp, coefficient, ue_id, formation_id, matiere_id, semestre_id, numero, abbrev, ects) FROM stdin;
+MOD100	Energie	M1101	0	0	0	3	UE96	FORM94	MAT98	1	1111	Energie	0
+MOD104	Système d'information numérique	M1102	0	0	0	3	UE96	FORM94	MAT102	1	1121	Système d'information numérique	0
+MOD108	Informatique	M1103	0	0	0	3	UE96	FORM94	MAT106	1	1131	Informatique	0
+MOD112	Systèmes électroniques	M1104	0	0	0	3	UE96	FORM94	MAT110	1	1141	Systèmes électroniques	0
+MOD118	Outils logiciels	M1201	0	0	0	2	UE114	FORM94	MAT116	1	1211	Outils logiciels	0
+MOD122	Réalisation d'ensembles pluritechnologiques	M1202	0	0	0	2	UE114	FORM94	MAT120	1	1221	Réalisation d'ensembles pluritechnologiques	0
+MOD126	Etudes et réalisation d'ensembles pluritechnologiques	M1203	0	0	0	2	UE114	FORM94	MAT124	1	1231	Etudes et réalisation d'ensembles pluritechnologiques	0
+MOD130	Projet personnel et professionnel	M1204	0	0	0	1	UE114	FORM94	MAT128	1	1241	Projet personnel et professionnel	0
+MOD134	Adaptation - Méthodologie pour la réussite universitaire	M1205	0	0	0	0	UE114	FORM94	MAT132	1	1251	Adaptation - Méthodologie pour la réussite universitaire	0
+MOD138	Initiation à la gestion de projet	M1206	0	0	0	1	UE114	FORM94	MAT136	1	1261	Initiation à la gestion de projet	0
+MOD142	Projet tutoré	M1207	0	0	0	2	UE114	FORM94	MAT140	1	1271	Projet tutoré	0
+MOD148	Anglais	M1301	0	0	0	2	UE144	FORM94	MAT146	1	1311	Anglais	0
+MOD152	Mathématiques	M1302	0	0	0	2	UE144	FORM94	MAT150	1	1321	Mathématiques	0
+MOD156	Expression et Communication	M1303	0	0	0	2	UE144	FORM94	MAT154	1	1331	Expression et Communication	0
+MOD160	Thermique - Mécanique	M1304	0	0	0	2	UE144	FORM94	MAT158	1	1341	Thermique - Mécanique	0
+MOD166	Sport	APB	0	0	0	1	UE162	FORM94	MAT164	1	1411	Sport	\N
+MOD170	Actions de promotions	APR	0	0	0	1	UE162	FORM94	MAT168	1	1421	Actions de promotions	\N
+MOD176	Energie	M2101	0	0	0	3	UE172	FORM94	MAT174	2	2111	Energie	0
+MOD180	Automatisme	M2102	0	0	0	3	UE172	FORM94	MAT178	2	2121	Automatisme	0
+MOD184	Informatique embarquée	M2103	0	0	0	3	UE172	FORM94	MAT182	2	2131	Informatique embarquée	0
+MOD188	Systèmes électroniques	M2104	0	0	0	3	UE172	FORM94	MAT186	2	2141	Systèmes électroniques	0
+MOD194	Outils logiciels	M2201	0	0	0	1.5	UE190	FORM94	MAT192	2	2211	Outils logiciels	0
+MOD198	Etudes et réalisation d'ensembles pluritechnologiques	M2203	0	0	0	3	UE190	FORM94	MAT196	2	2231	Etudes et réalisation d'ensembles pluritechnologiques	0
+MOD202	Projet personnel et professionnel	M2204	0	0	0	1	UE190	FORM94	MAT200	2	2241	Projet personnel et professionnel	0
+MOD206	Développement des compétences projet	M2206	0	0	0	1.5	UE190	FORM94	MAT204	2	2261	Développement des compétences projet	0
+MOD210	Projet tutoré	M2207	0	0	0	2	UE190	FORM94	MAT208	2	2271	Projet tutoré	0
+MOD216	Anglais	M2301	0	0	0	2	UE212	FORM94	MAT214	2	2311	Anglais	0
+MOD220	Mathématiques	M2302	0	0	0	3	UE212	FORM94	MAT218	2	2321	Mathématiques	0
+MOD224	Expression et Communication	M2303	0	0	0	2	UE212	FORM94	MAT222	2	2331	Expression et Communication	0
+MOD228	Electromagnétisme - Capteur	M2304	0	0	0	2	UE212	FORM94	MAT226	2	2341	Electromagnétisme - Capteur	0
+MOD234	Sport	APB	0	0	0	1	UE230	FORM94	MAT232	2	2411	Sport	\N
+MOD238	Actions de promotions	APR	0	0	0	1	UE230	FORM94	MAT236	2	2421	Actions de promotions	\N
+MOD244	Energie	M3101	0	0	0	2	UE240	FORM94	MAT242	3	3111	Energie	0
+MOD248	Automatique	M3102	0	0	0	2	UE240	FORM94	MAT246	3	3121	Automatique	0
+MOD252	Réseaux	M3103	0	0	0	2	UE240	FORM94	MAT250	3	3131	Réseaux	0
+MOD256	Systèmes électroniques	M3104	0	0	0	2	UE240	FORM94	MAT254	3	3141	Systèmes électroniques	0
+MOD260	Programmation Orientée Objet	M3105C	0	0	0	1.5	UE240	FORM94	MAT258	3	3151	Programmation Orientée Objet	0
+MOD264	Energies renouvelables : production et stockage	M3106C	0	0	0	1.5	UE240	FORM94	MAT262	3	3161	Energies renouvelables : production et stockage	0
+MOD270	Outils logiciels	M3201	0	0	0	2	UE266	FORM94	MAT268	3	3211	Outils logiciels	0
+MOD274	Etudes et réalisation d'ensembles pluritechnologiques	M3203	0	0	0	3	UE266	FORM94	MAT272	3	3231	Etudes et réalisation d'ensembles pluritechnologiques	0
+MOD278	Projet personnel et professionnel	M3204	0	0	0	1	UE266	FORM94	MAT276	3	3241	Projet personnel et professionnel	0
+MOD282	Cycle de vie du produit	M3206	0	0	0	1	UE266	FORM94	MAT280	3	3261	Cycle de vie du produit	0
+MOD286	Projet tutoré	M3207	0	0	0	2	UE266	FORM94	MAT284	3	3271	Projet tutoré	0
+MOD290	Supervision	M3208C	0	0	0	2	UE266	FORM94	MAT288	3	3281	Supervision	0
+MOD296	Anglais	M3301	0	0	0	2	UE292	FORM94	MAT294	3	3311	Anglais	0
+MOD300	Mathématiques	M3302	0	0	0	2	UE292	FORM94	MAT298	3	3321	Mathématiques	0
+MOD304	Expression et Communication	M3303	0	0	0	2	UE292	FORM94	MAT302	3	3331	Expression et Communication	0
+MOD308	Propagation - CEM	M3304	0	0	0	2	UE292	FORM94	MAT306	3	3341	Propagation - CEM	0
+MOD314	Sport	APB	0	0	0	1	UE310	FORM94	MAT312	3	3411	Sport	\N
+MOD318	Actions de promotions	APR	0	0	0	1	UE310	FORM94	MAT316	3	3421	Actions de promotions	\N
+MOD324	Stage	M4101	0	0	0	12	UE320	FORM94	MAT322	4	4111	Stage	0
+MOD330	Etudes et réalisation d'ensembles pluritechnologiques	M4203	0	0	0	3	UE326	FORM94	MAT328	4	4231	Etudes et réalisation d'ensembles pluritechnologiques	0
+MOD334	Projet personnel et professionnel	M4204	0	0	0	1	UE326	FORM94	MAT332	4	4241	Projet personnel et professionnel	0
+MOD338	Projet tutoré	M4207	0	0	0	2	UE326	FORM94	MAT336	4	4271	Projet tutoré	0
+MOD342	Composants complexes FPGA	M4209C	0	0	0	1.5	UE326	FORM94	MAT340	4	4291	Composants complexes FPGA	0
+MOD346	Réseaux industriels	M4210C	0	0	0	1.5	UE326	FORM94	MAT344	4	4301	Réseaux industriels	0
+MOD350	Traitement numérique du signal	M4211C	0	0	0	1.5	UE326	FORM94	MAT348	4	4311	Traitement numérique du signal	0
+MOD354	Distribution électrique NFC 15-100	M4212C	0	0	0	1.5	UE326	FORM94	MAT352	4	4321	Distribution électrique NFC 15-100	0
+MOD360	Anglais	M4301	0	0	0	2	UE356	FORM94	MAT358	4	4311	Anglais	0
+MOD364	Expression et Communication	M4303	0	0	0	1	UE356	FORM94	MAT362	4	4331	Expression et Communication	0
+MOD368	Connaissance de l'entreprise	M4305	0	0	0	1	UE356	FORM94	MAT366	4	4351	Connaissance de l'entreprise	0
+MOD372	Maitrise Statistique des Procédés - Fiabilité	M4306C	0	0	0	2	UE356	FORM94	MAT370	4	4361	Maitrise Statistique des Procédés - Fiabilité	0
+MOD378	Sport	APB	0	0	0	1	UE374	FORM94	MAT376	4	4411	Sport	\N
+MOD382	Actions de promotions	APR	0	0	0	1	UE374	FORM94	MAT380	4	4421	Actions de promotions	\N
+\.
+
+
+--
+-- Data for Name: notes_modules_enseignants; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY notes_modules_enseignants (modules_enseignants_id, moduleimpl_id, ens_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: notes_notes; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY notes_notes (etudid, evaluation_id, value, comment, date, uid) FROM stdin;
+EID4	EVAL408	9		2014-04-08 21:10:58	admin
+EID10	EVAL408	13		2014-04-08 21:10:58	admin
+EID1	EVAL408	4		2014-04-08 21:10:58	admin
+EID7	EVAL408	12		2014-04-08 21:10:58	admin
+\.
+
+
+--
+-- Data for Name: notes_notes_log; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY notes_notes_log (id, etudid, evaluation_id, value, comment, date, uid) FROM stdin;
+\.
+
+
+--
+-- Name: notes_notes_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: www-data
+--
+
+SELECT pg_catalog.setval('notes_notes_log_id_seq', 1, false);
+
+
+--
+-- Data for Name: notes_semestres; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY notes_semestres (semestre_id) FROM stdin;
+-1
+1
+2
+3
+4
+5
+6
+7
+8
+\.
+
+
+--
+-- Data for Name: notes_ue; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY notes_ue (ue_id, formation_id, acronyme, numero, titre, type, ue_code, ects) FROM stdin;
+UE96	FORM94	UE11	11	Composants, systèmes et applications - Initiation	0	UE11	10
+UE114	FORM94	UE12	12	Innovation par la technologie et les projets - Initiation	0	UE12	10
+UE144	FORM94	UE13	13	Formation Scientifique et Humaine - Initiation	0	UE13	10
+UE162	FORM94	Sport et culture 1	14	Sport et culture	1	UE14	\N
+UE172	FORM94	UE21	21	Composants, systèmes et applications - Développement	0	UE21	10
+UE190	FORM94	UE22	22	Innovation par la technologie et les projets - Développement	0	UE22	10
+UE212	FORM94	UE23	23	Formation Scientifique et Humaine - Développement	0	UE23	10
+UE230	FORM94	Sport et culture 2	24	Sport et culture	1	UE24	\N
+UE240	FORM94	UE31	31	Composants, systèmes et applications - Approfondissement	0	UE31	10
+UE266	FORM94	UE32	32	Innovation par la technologie et les projets - Approfondissement	0	UE32	10
+UE292	FORM94	UE33	33	Formation Scientifique et Humaine - Approfondissement	0	UE33	10
+UE310	FORM94	Sport et culture 3	34	Sport et culture	1	UE34	\N
+UE320	FORM94	UE41	41	Stage	0	UE41	10
+UE326	FORM94	UE42	42	Innovation par la technologie et les projets - Renforcement	0	UE42	10
+UE356	FORM94	UE43	43	Formation Scientifique et Humaine - Renforcement	0	UE43	10
+UE374	FORM94	Sport et culture 4	44	Sport et culture	1	UE44	\N
+\.
+
+
+--
+-- Data for Name: partition; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY partition (partition_id, formsemestre_id, partition_name, compute_ranks, numero, bul_show_rank) FROM stdin;
+P1	SEM384	\N	1	1	0
+P71	SEM384	TD	1	2	0
+P85	SEM411	\N	1	3	0
+P132	SEM411	TD	1	4	0
+\.
+
+
+--
+-- Name: partition_numero_seq; Type: SEQUENCE SET; Schema: public; Owner: www-data
+--
+
+SELECT pg_catalog.setval('partition_numero_seq', 4, true);
+
+
+--
+-- Data for Name: sco_prefs; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY sco_prefs (pref_id, name, value, formsemestre_id) FROM stdin;
+PREF7	DeptName	GEII	\N
+PREF8	DeptFullName	nom du département	\N
+PREF9	UnivName	\N	\N
+PREF10	InstituteName	\N	\N
+PREF11	DeptIntranetTitle	Intranet	\N
+PREF12	DeptIntranetURL	\N	\N
+PREF13	emails_notifications	\N	\N
+PREF14	email_chefdpt	\N	\N
+PREF15	work_saturday	0	\N
+PREF16	handle_billets_abs	0	\N
+PREF17	abs_notify_chief	0	\N
+PREF18	abs_notify_respsem	0	\N
+PREF19	abs_notify_respeval	0	\N
+PREF20	abs_notify_etud	0	\N
+PREF21	abs_notify_email	\N	\N
+PREF22	abs_notify_max_freq	7	\N
+PREF23	abs_notify_abs_threshold	10	\N
+PREF24	abs_notify_abs_increment	20	\N
+PREF25	abs_notification_mail_tmpl	--- Ceci est un message de notification automatique issu de ScoDoc ---\n\nL'étudiant %(nomprenom)s  \ninscrit en %(inscription)s) \n\na cumulé %(nbabsjust)s absences justifiées \net %(nbabsnonjust)s absences NON justifiées.\n\nLe compte a pu changer depuis cet envoi, voir la fiche sur %(url_ficheetud)s.\n\n\nVotre dévoué serveur ScoDoc.\n\nPS: Au dela de %(abs_notify_abs_threshold)s, un email automatique est adressé toutes les %(abs_notify_abs_increment)s absences. Ces valeurs sont modifiables dans les préférences de ScoDoc.	\N
+PREF26	portal_url	\N	\N
+PREF27	portal_dept_name	Dept	\N
+PREF28	notify_etud_changes_to	\N	\N
+PREF29	always_require_ine	0	\N
+PREF30	SCOLAR_FONT	Helvetica	\N
+PREF31	SCOLAR_FONT_SIZE	10	\N
+PREF32	SCOLAR_FONT_SIZE_FOOT	6	\N
+PREF33	pdf_footer_x	20	\N
+PREF34	pdf_footer_y	6.35	\N
+PREF35	DirectorName	\N	\N
+PREF36	DirectorTitle	directeur de l'IUT	\N
+PREF37	ChiefDeptName	\N	\N
+PREF38	INSTITUTION_NAME	<b>Institut Universitaire de Technologie - Université Paris 13</b>	\N
+PREF39	INSTITUTION_ADDRESS	Web <b>www.iutv.univ-paris13.fr</b> - 99 avenue Jean-Baptiste Clément - F 93430 Villetaneuse	\N
+PREF40	INSTITUTION_CITY	Villetaneuse	\N
+PREF41	PV_INTRO	<bullet>-</bullet>  \nVu l'arrêté du 3 août 2005 relatif au diplôme universitaire de technologie et notamment son article 4 et 6;\n</para>\n<para><bullet>-</bullet>  \nvu l'arrêté n° %(Decnum)s du Président de l'%(UnivName)s;\n</para>\n<para><bullet>-</bullet> \nvu la délibération de la commission %(Type)s en date du %(Date)s présidée par le Chef du département;	\N
+PREF42	PV_LETTER_DIPLOMA_SIGNATURE	Le %(DirectorTitle)s, <br/>%(DirectorName)s	\N
+PREF43	PV_LETTER_PASSAGE_SIGNATURE	Pour le Directeur de l'IUT<br/>\net par délégation<br/>\nLe Chef du département	\N
+PREF44	pv_sig_image_height	11	\N
+PREF45	PV_LETTER_TEMPLATE	<para spaceBefore="1mm"> </para>\n<para spaceBefore="20mm" leftindent="%(pv_htab1)s">%(INSTITUTION_CITY)s, le %(date_jury)s\n</para>\n\n<para leftindent="%(pv_htab1)s" spaceBefore="10mm">\nà <b>%(nomprenom)s</b>\n</para>\n<para leftindent="%(pv_htab1)s">%(domicile)s</para>\n<para leftindent="%(pv_htab1)s">%(codepostaldomicile)s %(villedomicile)s</para>\n\n<para spaceBefore="25mm" fontSize="14" alignment="center">\n<b>Jury de %(type_jury)s  <br/> %(titre_formation)s</b>\n</para>\n\n<para spaceBefore="10mm" fontSize="14" leftindent="0">\nLe jury de %(type_jury_abbrv)s du département %(DeptName)s\ns'est réuni le %(date_jury)s. \n</para>\n<para fontSize="14" leftindent="0">Les décisions vous concernant sont :\n</para>\n\n<para leftindent="%(pv_htab2)s" spaceBefore="5mm" fontSize="14">%(prev_decision_sem_txt)s</para>\n<para leftindent="%(pv_htab2)s" spaceBefore="5mm" fontSize="14">\n    <b>Décision %(decision_orig)s :</b> %(decision_sem_descr)s\n</para>\n\n<para leftindent="%(pv_htab2)s" spaceBefore="0mm" fontSize="14">\n%(decision_ue_txt)s\n</para>\n\n<para leftindent="%(pv_htab2)s" spaceBefore="0mm" fontSize="14">\n%(observation_txt)s\n</para>\n\n<para spaceBefore="10mm" fontSize="14">%(autorisations_txt)s</para>\n\n<para spaceBefore="10mm" fontSize="14">%(diplome_txt)s</para>	\N
+PREF46	PV_LETTER_WITH_HEADER	0	\N
+PREF47	PV_LETTER_WITH_FOOTER	0	\N
+PREF48	pv_htab1	8cm	\N
+PREF49	pv_htab2	5mm	\N
+PREF50	PV_FONTNAME	Times-Roman	\N
+PREF51	bul_title	Université Paris 13 - IUT de Villetaneuse - Département %(DeptName)s	\N
+PREF52	bul_class_name	BulletinGeneratorStandard	\N
+PREF53	bul_show_abs	1	\N
+PREF54	bul_show_abs_modules	0	\N
+PREF55	bul_show_decision	1	\N
+PREF56	bul_show_codemodules	0	\N
+PREF57	bul_show_matieres	0	\N
+PREF58	bul_show_all_evals	0	\N
+PREF59	bul_show_rangs	1	\N
+PREF60	bul_show_ue_rangs	1	\N
+PREF61	bul_show_mod_rangs	1	\N
+PREF62	bul_show_minmax	0	\N
+PREF63	bul_show_minmax_mod	0	\N
+PREF64	bul_show_coef	1	\N
+PREF65	bul_show_ue_cap_details	0	\N
+PREF66	bul_show_temporary_forced	0	\N
+PREF67	bul_show_temporary	1	\N
+PREF68	bul_temporary_txt	Provisoire	\N
+PREF69	bul_show_uevalid	1	\N
+PREF70	bul_show_mention	0	\N
+PREF71	bul_show_date_inscr	1	\N
+PREF72	bul_show_sig_left	0	\N
+PREF73	bul_show_sig_right	0	\N
+PREF74	bul_pdf_title	<para fontSize="14" align="center">\n<b>%(UnivName)s</b>\n</para>\n<para fontSize="16" align="center" spaceBefore="2mm">\n<b>%(InstituteName)s</b>\n</para>\n<para fontSize="16" align="center" spaceBefore="4mm">\n<b>RELEVÉ DE NOTES</b>\n</para>\n\n<para fontSize="15" spaceBefore="3mm">\n%(nomprenom)s <b>%(demission)s</b>\n</para>\n\n<para fontSize="14" spaceBefore="3mm">\nFormation: %(titre_num)s</para>\n<para fontSize="14" spaceBefore="2mm">\nAnnée scolaire: %(anneescolaire)s\n</para>	\N
+PREF75	bul_pdf_caption	<para spaceBefore="5mm" fontSize="14"><i>%(situation)s</i></para>	\N
+PREF76	bul_pdf_sig_left	<para>La direction des études\n<br/>\n%(responsable)s\n</para>	\N
+PREF77	bul_pdf_sig_right	<para>Le chef de département\n<br/>\n%(ChiefDeptName)s\n</para>	\N
+PREF78	bul_pdf_mod_colwidth	\N	\N
+PREF79	SCOLAR_FONT_BUL_FIELDS	Times-Roman	\N
+PREF80	email_copy_bulletins	\N	\N
+PREF81	email_from_addr	noreply@scodoc.example.com	\N
+PREF82	bul_intro_mail	%(nomprenom)s,\n\nvous trouverez ci-joint votre relevé de notes au format PDF.\nIl s'agit d'un relevé indicatif. Seule la version papier signée par le responsable pédagogique de l'établissement prend valeur officielle.\n\nPour toute question sur ce document, contactez votre enseignant ou le directeur des études (ne pas répondre à ce message).\n\nCordialement,\nla scolarité du département %(dept)s.\n\nPS: si vous recevez ce message par erreur, merci de contacter %(webmaster)s	\N
+PREF83	bul_mail_list_abs	0	\N
+PREF84	bul_mail_contact_addr	l'administrateur	\N
+PREF85	bul_mail_allowed_for_all	1	\N
+PREF86	left_margin	0	\N
+PREF87	top_margin	0	\N
+PREF88	right_margin	0	\N
+PREF89	bottom_margin	0	\N
+PREF90	edt_sem_ics_url	\N	\N
+PREF91	edt_groups2scodoc	\N	\N
+\.
+
+
+--
+-- Data for Name: scolar_autorisation_inscription; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY scolar_autorisation_inscription (autorisation_inscription_id, etudid, formation_code, semestre_id, date, origin_formsemestre_id) FROM stdin;
+AUT5	EID7	DUTGEII	2	2014-04-08 21:12:27.196461	SEM384
+AUT10	EID10	DUTGEII	2	2014-04-08 21:12:27.256993	SEM384
+AUT15	EID4	DUTGEII	2	2014-04-08 21:12:39.920198	SEM384
+AUT20	EID1	DUTGEII	1	2014-04-08 21:12:52.960499	SEM384
+\.
+
+
+--
+-- Data for Name: scolar_events; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY scolar_events (event_id, etudid, event_date, formsemestre_id, ue_id, event_type, comp_formsemestre_id) FROM stdin;
+EVT92	EID1	2014-04-08 00:00:00	\N	\N	CREATION	\N
+EVT403	EID1	2014-04-08 00:00:00	SEM384	\N	INSCRIPTION	\N
+EVT404	EID4	2014-04-08 00:00:00	SEM384	\N	INSCRIPTION	\N
+EVT405	EID7	2014-04-08 00:00:00	SEM384	\N	INSCRIPTION	\N
+EVT406	EID10	2014-04-08 00:00:00	SEM384	\N	INSCRIPTION	\N
+EVT428	EID7	2014-04-08 00:00:00	SEM411	\N	INSCRIPTION	\N
+EVT429	EID4	2014-04-08 00:00:00	SEM411	\N	INSCRIPTION	\N
+EVT430	EID10	2014-04-08 00:00:00	SEM411	\N	INSCRIPTION	\N
+EVT431	EID7	2014-04-08 00:00:00	SEM411	\N	INSCRIPTION	\N
+EVT432	EID4	2014-04-08 00:00:00	SEM411	\N	INSCRIPTION	\N
+EVT433	EID10	2014-04-08 00:00:00	SEM411	\N	INSCRIPTION	\N
+\.
+
+
+--
+-- Data for Name: scolar_formsemestre_validation; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY scolar_formsemestre_validation (formsemestre_validation_id, etudid, formsemestre_id, ue_id, code, assidu, event_date, compense_formsemestre_id, moy_ue, semestre_id) FROM stdin;
+VAL1	EID7	SEM384	\N	ADM	1	2014-04-08 21:12:27.179605	\N	\N	\N
+VAL2	EID7	SEM384	UE96	ADM	\N	2014-04-08 21:12:27.183921	\N	12	\N
+VAL3	EID7	SEM384	UE114	CMP	\N	2014-04-08 21:12:27.188531	\N	\N	\N
+VAL4	EID7	SEM384	UE144	CMP	\N	2014-04-08 21:12:27.19115	\N	\N	\N
+VAL6	EID10	SEM384	\N	ADM	1	2014-04-08 21:12:27.245893	\N	\N	\N
+VAL7	EID10	SEM384	UE96	ADM	\N	2014-04-08 21:12:27.247892	\N	13	\N
+VAL8	EID10	SEM384	UE114	CMP	\N	2014-04-08 21:12:27.2504	\N	\N	\N
+VAL9	EID10	SEM384	UE144	CMP	\N	2014-04-08 21:12:27.253405	\N	\N	\N
+VAL11	EID4	SEM384	\N	ATT	1	2014-04-08 21:12:39.833939	\N	\N	\N
+VAL12	EID4	SEM384	UE96	AJ	\N	2014-04-08 21:12:39.87784	\N	\N	\N
+VAL13	EID4	SEM384	UE114	AJ	\N	2014-04-08 21:12:39.898159	\N	\N	\N
+VAL14	EID4	SEM384	UE144	AJ	\N	2014-04-08 21:12:39.907062	\N	\N	\N
+VAL16	EID1	SEM384	\N	AJ	1	2014-04-08 21:12:52.922522	\N	\N	\N
+VAL17	EID1	SEM384	UE96	AJ	\N	2014-04-08 21:12:52.952237	\N	\N	\N
+VAL18	EID1	SEM384	UE114	AJ	\N	2014-04-08 21:12:52.954789	\N	\N	\N
+VAL19	EID1	SEM384	UE144	AJ	\N	2014-04-08 21:12:52.957068	\N	\N	\N
+\.
+
+
+--
+-- Data for Name: scolar_news; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY scolar_news (news_id, date, authenticated_user, type, object, text, url) FROM stdin;
+NEWS93	2014-04-08 20:57:18.984904	admin	INSCR	\N	Nouvel étudiant <a href="ficheEtud?etudid=EID1">M. Georges DUPONT</a>	ficheEtud?etudid=EID1
+NEWS95	2014-04-08 20:59:58.837015	admin	FORM	\N	Création de la formation DUT Génie Electrique et Informatique Industrielle (DUT GEII)	\N
+NEWS97	2014-04-08 20:59:58.842023	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS99	2014-04-08 20:59:58.846705	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS101	2014-04-08 20:59:58.851705	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS103	2014-04-08 20:59:58.855099	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS105	2014-04-08 20:59:58.860486	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS107	2014-04-08 20:59:58.86534	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS109	2014-04-08 20:59:58.869742	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS111	2014-04-08 20:59:58.873026	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS113	2014-04-08 20:59:58.876922	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS115	2014-04-08 20:59:58.880351	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS117	2014-04-08 20:59:58.883704	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS119	2014-04-08 20:59:58.886528	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS121	2014-04-08 20:59:58.889916	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS123	2014-04-08 20:59:58.893139	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS125	2014-04-08 20:59:58.896642	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS127	2014-04-08 20:59:58.899924	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS129	2014-04-08 20:59:58.903674	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS131	2014-04-08 20:59:58.907832	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS133	2014-04-08 20:59:58.911313	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS135	2014-04-08 20:59:58.914785	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS137	2014-04-08 20:59:58.918303	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS139	2014-04-08 20:59:58.921605	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS141	2014-04-08 20:59:58.925847	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS143	2014-04-08 20:59:58.929567	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS145	2014-04-08 20:59:58.933349	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS147	2014-04-08 20:59:58.937012	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS149	2014-04-08 20:59:58.940379	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS151	2014-04-08 20:59:58.943751	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS153	2014-04-08 20:59:58.947887	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS155	2014-04-08 20:59:58.951252	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS157	2014-04-08 20:59:58.954439	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS159	2014-04-08 20:59:58.957473	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS161	2014-04-08 20:59:58.961494	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS163	2014-04-08 20:59:58.964807	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS165	2014-04-08 20:59:58.968008	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS167	2014-04-08 20:59:58.970899	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS169	2014-04-08 20:59:58.974184	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS171	2014-04-08 20:59:58.978364	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS173	2014-04-08 20:59:58.981872	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS175	2014-04-08 20:59:58.985328	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS177	2014-04-08 20:59:58.988681	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS179	2014-04-08 20:59:58.992383	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS181	2014-04-08 20:59:58.995621	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS183	2014-04-08 20:59:58.99998	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS185	2014-04-08 20:59:59.003275	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS187	2014-04-08 20:59:59.006653	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS189	2014-04-08 20:59:59.010006	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS191	2014-04-08 20:59:59.013346	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS193	2014-04-08 20:59:59.016784	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS195	2014-04-08 20:59:59.019907	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS197	2014-04-08 20:59:59.026061	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS199	2014-04-08 20:59:59.029606	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS201	2014-04-08 20:59:59.033606	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS203	2014-04-08 20:59:59.037214	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS205	2014-04-08 20:59:59.040917	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS207	2014-04-08 20:59:59.044477	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS209	2014-04-08 20:59:59.047813	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS211	2014-04-08 20:59:59.051974	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS213	2014-04-08 20:59:59.055568	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS215	2014-04-08 20:59:59.058765	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS217	2014-04-08 20:59:59.062394	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS219	2014-04-08 20:59:59.065991	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS221	2014-04-08 20:59:59.069531	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS223	2014-04-08 20:59:59.073029	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS225	2014-04-08 20:59:59.077317	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS227	2014-04-08 20:59:59.080866	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS229	2014-04-08 20:59:59.084151	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS231	2014-04-08 20:59:59.087627	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS233	2014-04-08 20:59:59.090974	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS235	2014-04-08 20:59:59.094339	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS237	2014-04-08 20:59:59.097553	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS239	2014-04-08 20:59:59.1008	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS241	2014-04-08 20:59:59.104079	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS243	2014-04-08 20:59:59.107679	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS245	2014-04-08 20:59:59.110876	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS247	2014-04-08 20:59:59.114354	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS249	2014-04-08 20:59:59.119451	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS251	2014-04-08 20:59:59.122879	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS253	2014-04-08 20:59:59.127311	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS255	2014-04-08 20:59:59.130598	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS257	2014-04-08 20:59:59.133848	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS259	2014-04-08 20:59:59.137328	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS261	2014-04-08 20:59:59.141282	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS263	2014-04-08 20:59:59.144501	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS265	2014-04-08 20:59:59.148211	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS267	2014-04-08 20:59:59.15158	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS269	2014-04-08 20:59:59.154665	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS271	2014-04-08 20:59:59.157856	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS273	2014-04-08 20:59:59.161144	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS275	2014-04-08 20:59:59.164723	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS277	2014-04-08 20:59:59.168597	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS279	2014-04-08 20:59:59.17279	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS281	2014-04-08 20:59:59.17715	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS283	2014-04-08 20:59:59.18044	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS285	2014-04-08 20:59:59.183899	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS287	2014-04-08 20:59:59.187205	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS289	2014-04-08 20:59:59.191342	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS291	2014-04-08 20:59:59.194359	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS293	2014-04-08 20:59:59.197606	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS295	2014-04-08 20:59:59.201017	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS297	2014-04-08 20:59:59.204439	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS299	2014-04-08 20:59:59.207826	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS301	2014-04-08 20:59:59.211815	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS303	2014-04-08 20:59:59.215178	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS305	2014-04-08 20:59:59.218408	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS307	2014-04-08 20:59:59.222155	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS309	2014-04-08 20:59:59.225702	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS311	2014-04-08 20:59:59.228991	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS313	2014-04-08 20:59:59.231897	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS315	2014-04-08 20:59:59.234786	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS317	2014-04-08 20:59:59.237978	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS319	2014-04-08 20:59:59.24124	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS321	2014-04-08 20:59:59.244565	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS323	2014-04-08 20:59:59.247904	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS325	2014-04-08 20:59:59.250959	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS327	2014-04-08 20:59:59.254851	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS329	2014-04-08 20:59:59.257993	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS331	2014-04-08 20:59:59.261209	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS333	2014-04-08 20:59:59.264643	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS335	2014-04-08 20:59:59.267859	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS337	2014-04-08 20:59:59.271131	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS339	2014-04-08 20:59:59.274334	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS341	2014-04-08 20:59:59.277627	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS343	2014-04-08 20:59:59.281142	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS345	2014-04-08 20:59:59.284786	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS347	2014-04-08 20:59:59.288546	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS349	2014-04-08 20:59:59.292512	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS351	2014-04-08 20:59:59.295778	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS353	2014-04-08 20:59:59.299042	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS355	2014-04-08 20:59:59.302329	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS357	2014-04-08 20:59:59.305894	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS359	2014-04-08 20:59:59.309424	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS361	2014-04-08 20:59:59.312587	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS363	2014-04-08 20:59:59.31592	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS365	2014-04-08 20:59:59.318826	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS367	2014-04-08 20:59:59.322217	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS369	2014-04-08 20:59:59.326294	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS371	2014-04-08 20:59:59.329472	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS373	2014-04-08 20:59:59.3327	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS375	2014-04-08 20:59:59.335989	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS377	2014-04-08 20:59:59.339449	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS379	2014-04-08 20:59:59.343756	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS381	2014-04-08 20:59:59.347083	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS383	2014-04-08 20:59:59.398906	admin	FORM	FORM94	Modification de la formation DUT GEII	\N
+NEWS385	2014-04-08 21:05:16.412088	admin	SEM	\N	Création du semestre <a href="Notes/formsemestre_status?formsemestre_id=SEM384">DUT Génie Electrique et Informatique Industrielle</a>	Notes/formsemestre_status?formsemestre_id=SEM384
+NEWS407	2014-04-08 21:09:18.950878	admin	INSCR	\N	Inscription de 3 étudiants	\N
+NEWS409	2014-04-08 21:10:32.054995	admin	NOTES	MIP386	Création d'une évaluation dans <a href="Notes/moduleimpl_status?moduleimpl_id=MIP386">Energie</a>	Notes/moduleimpl_status?moduleimpl_id=MIP386
+NEWS410	2014-04-08 21:10:58.862975	admin	NOTES	MIP386	Chargement notes dans <a href="Notes/moduleimpl_status?moduleimpl_id=MIP386">Energie</a>	Notes/moduleimpl_status?moduleimpl_id=MIP386
+NEWS412	2014-04-08 21:14:10.127776	admin	SEM	\N	Création du semestre <a href="Notes/formsemestre_status?formsemestre_id=SEM411">DUT Génie Electrique et Informatique Industrielle</a>	Notes/formsemestre_status?formsemestre_id=SEM411
+\.
+
+
+--
+-- Data for Name: scolog; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY scolog (date, authenticated_user, remote_addr, remote_host, method, etudid, msg) FROM stdin;
+2014-04-08 20:57:18.98079	admin	127.0.0.1		etudident_edit_form	EID1                            	creation initiale
+2014-04-08 21:05:37.339754	admin	127.0.0.1		formsemestre_inscription_with_modules	EID1                            	inscription en semestre SEM384
+2014-04-08 21:05:37.375313	admin	127.0.0.1		moduleimpl_inscription	EID1                            	inscription module MIP386
+2014-04-08 21:05:37.378926	admin	127.0.0.1		moduleimpl_inscription	EID1                            	inscription module MIP387
+2014-04-08 21:05:37.382528	admin	127.0.0.1		moduleimpl_inscription	EID1                            	inscription module MIP388
+2014-04-08 21:05:37.38688	admin	127.0.0.1		moduleimpl_inscription	EID1                            	inscription module MIP389
+2014-04-08 21:05:37.390629	admin	127.0.0.1		moduleimpl_inscription	EID1                            	inscription module MIP390
+2014-04-08 21:05:37.395795	admin	127.0.0.1		moduleimpl_inscription	EID1                            	inscription module MIP391
+2014-04-08 21:05:37.399842	admin	127.0.0.1		moduleimpl_inscription	EID1                            	inscription module MIP392
+2014-04-08 21:05:37.403658	admin	127.0.0.1		moduleimpl_inscription	EID1                            	inscription module MIP393
+2014-04-08 21:05:37.407217	admin	127.0.0.1		moduleimpl_inscription	EID1                            	inscription module MIP394
+2014-04-08 21:05:37.411431	admin	127.0.0.1		moduleimpl_inscription	EID1                            	inscription module MIP395
+2014-04-08 21:05:37.415357	admin	127.0.0.1		moduleimpl_inscription	EID1                            	inscription module MIP396
+2014-04-08 21:05:37.418777	admin	127.0.0.1		moduleimpl_inscription	EID1                            	inscription module MIP397
+2014-04-08 21:05:37.42237	admin	127.0.0.1		moduleimpl_inscription	EID1                            	inscription module MIP398
+2014-04-08 21:05:37.427045	admin	127.0.0.1		moduleimpl_inscription	EID1                            	inscription module MIP399
+2014-04-08 21:05:37.430802	admin	127.0.0.1		moduleimpl_inscription	EID1                            	inscription module MIP400
+2014-04-08 21:09:18.687708	admin	127.0.0.1		import_csv_file	EID4                            	inscription en semestre SEM384
+2014-04-08 21:09:18.717713	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP386
+2014-04-08 21:09:18.721058	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP387
+2014-04-08 21:09:18.724533	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP388
+2014-04-08 21:09:18.727858	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP389
+2014-04-08 21:09:18.730721	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP390
+2014-04-08 21:09:18.734466	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP391
+2014-04-08 21:09:18.737997	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP392
+2014-04-08 21:09:18.742604	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP393
+2014-04-08 21:09:18.746655	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP394
+2014-04-08 21:09:18.750292	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP395
+2014-04-08 21:09:18.754561	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP396
+2014-04-08 21:09:18.757907	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP397
+2014-04-08 21:09:18.761277	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP398
+2014-04-08 21:09:18.76503	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP399
+2014-04-08 21:09:18.768747	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP400
+2014-04-08 21:09:18.779253	admin	127.0.0.1		import_csv_file	EID7                            	inscription en semestre SEM384
+2014-04-08 21:09:18.809466	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP386
+2014-04-08 21:09:18.813037	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP387
+2014-04-08 21:09:18.816525	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP388
+2014-04-08 21:09:18.820171	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP389
+2014-04-08 21:09:18.825482	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP390
+2014-04-08 21:09:18.829051	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP391
+2014-04-08 21:09:18.832334	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP392
+2014-04-08 21:09:18.835674	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP393
+2014-04-08 21:09:18.839544	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP394
+2014-04-08 21:09:18.843464	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP395
+2014-04-08 21:09:18.846986	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP396
+2014-04-08 21:09:18.850561	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP397
+2014-04-08 21:09:18.854228	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP398
+2014-04-08 21:09:18.858484	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP399
+2014-04-08 21:09:18.862123	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP400
+2014-04-08 21:09:18.871449	admin	127.0.0.1		import_csv_file	EID10                           	inscription en semestre SEM384
+2014-04-08 21:09:18.897413	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP386
+2014-04-08 21:09:18.901341	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP387
+2014-04-08 21:09:18.904811	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP388
+2014-04-08 21:09:18.909347	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP389
+2014-04-08 21:09:18.912957	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP390
+2014-04-08 21:09:18.916438	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP391
+2014-04-08 21:09:18.920669	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP392
+2014-04-08 21:09:18.923988	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP393
+2014-04-08 21:09:18.927304	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP394
+2014-04-08 21:09:18.930911	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP395
+2014-04-08 21:09:18.934336	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP396
+2014-04-08 21:09:18.937687	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP397
+2014-04-08 21:09:18.942283	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP398
+2014-04-08 21:09:18.945788	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP399
+2014-04-08 21:09:18.949299	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP400
+2014-04-08 21:11:32.099682	admin	127.0.0.1		changeGroup	EID7                            	formsemestre_id=SEM384,partition_name=TD, group_name=TD
+2014-04-08 21:11:32.104579	admin	127.0.0.1		changeGroup	EID4                            	formsemestre_id=SEM384,partition_name=TD, group_name=TD
+2014-04-08 21:11:32.108771	admin	127.0.0.1		changeGroup	EID10                           	formsemestre_id=SEM384,partition_name=TD, group_name=TD
+2014-04-08 21:11:32.112856	admin	127.0.0.1		changeGroup	EID1                            	formsemestre_id=SEM384,partition_name=TD, group_name=TD
+2014-04-08 21:12:07.737404	admin	127.0.0.1		changeGroup	EID7                            	formsemestre_id=SEM384,partition_name=TD, group_name=A
+2014-04-08 21:12:07.743574	admin	127.0.0.1		changeGroup	EID4                            	formsemestre_id=SEM384,partition_name=TD, group_name=B
+2014-04-08 21:12:07.747434	admin	127.0.0.1		changeGroup	EID10                           	formsemestre_id=SEM384,partition_name=TD, group_name=A
+2014-04-08 21:12:07.75173	admin	127.0.0.1		changeGroup	EID1                            	formsemestre_id=SEM384,partition_name=TD, group_name=B
+2014-04-08 21:12:27.183921	admin	127.0.0.1		validate_sem	EID7                            	formsemestre_id=SEM384 code=ADM
+2014-04-08 21:12:27.188531	admin	127.0.0.1		validate_ue	EID7                            	ue_id=UE96 code=ADM
+2014-04-08 21:12:27.19115	admin	127.0.0.1		validate_ue	EID7                            	ue_id=UE114 code=CMP
+2014-04-08 21:12:27.195115	admin	127.0.0.1		validate_ue	EID7                            	ue_id=UE144 code=CMP
+2014-04-08 21:12:27.247892	admin	127.0.0.1		validate_sem	EID10                           	formsemestre_id=SEM384 code=ADM
+2014-04-08 21:12:27.2504	admin	127.0.0.1		validate_ue	EID10                           	ue_id=UE96 code=ADM
+2014-04-08 21:12:27.253405	admin	127.0.0.1		validate_ue	EID10                           	ue_id=UE114 code=CMP
+2014-04-08 21:12:27.255709	admin	127.0.0.1		validate_ue	EID10                           	ue_id=UE144 code=CMP
+2014-04-08 21:12:39.87784	admin	127.0.0.1		validate_sem	EID4                            	formsemestre_id=SEM384 code=ATT
+2014-04-08 21:12:39.898159	admin	127.0.0.1		validate_ue	EID4                            	ue_id=UE96 code=AJ
+2014-04-08 21:12:39.907062	admin	127.0.0.1		validate_ue	EID4                            	ue_id=UE114 code=AJ
+2014-04-08 21:12:39.916736	admin	127.0.0.1		validate_ue	EID4                            	ue_id=UE144 code=AJ
+2014-04-08 21:12:52.952237	admin	127.0.0.1		validate_sem	EID1                            	formsemestre_id=SEM384 code=AJ
+2014-04-08 21:12:52.954789	admin	127.0.0.1		validate_ue	EID1                            	ue_id=UE96 code=AJ
+2014-04-08 21:12:52.957068	admin	127.0.0.1		validate_ue	EID1                            	ue_id=UE114 code=AJ
+2014-04-08 21:12:52.959225	admin	127.0.0.1		validate_ue	EID1                            	ue_id=UE144 code=AJ
+2014-04-08 21:14:26.027736	admin	127.0.0.1		formsemestre_inscr_passage	EID7                            	inscription en semestre SEM411
+2014-04-08 21:14:26.047383	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP413
+2014-04-08 21:14:26.050985	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP414
+2014-04-08 21:14:26.055304	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP415
+2014-04-08 21:14:26.059932	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP416
+2014-04-08 21:14:26.064955	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP417
+2014-04-08 21:14:26.068541	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP418
+2014-04-08 21:14:26.072136	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP419
+2014-04-08 21:14:26.076273	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP420
+2014-04-08 21:14:26.079789	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP421
+2014-04-08 21:14:26.084117	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP422
+2014-04-08 21:14:26.087509	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP423
+2014-04-08 21:14:26.090753	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP424
+2014-04-08 21:14:26.09507	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP425
+2014-04-08 21:14:26.104502	admin	127.0.0.1		formsemestre_inscr_passage	EID4                            	inscription en semestre SEM411
+2014-04-08 21:14:26.123967	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP413
+2014-04-08 21:14:26.129051	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP414
+2014-04-08 21:14:26.132506	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP415
+2014-04-08 21:14:26.137179	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP416
+2014-04-08 21:14:26.141177	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP417
+2014-04-08 21:14:26.144631	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP418
+2014-04-08 21:14:26.148059	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP419
+2014-04-08 21:14:26.15165	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP420
+2014-04-08 21:14:26.154824	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP421
+2014-04-08 21:14:26.159169	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP422
+2014-04-08 21:14:26.162826	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP423
+2014-04-08 21:14:26.166407	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP424
+2014-04-08 21:14:26.169877	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP425
+2014-04-08 21:14:26.178553	admin	127.0.0.1		formsemestre_inscr_passage	EID10                           	inscription en semestre SEM411
+2014-04-08 21:14:26.206524	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP413
+2014-04-08 21:14:26.2109	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP414
+2014-04-08 21:14:26.214554	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP415
+2014-04-08 21:14:26.21851	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP416
+2014-04-08 21:14:26.22295	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP417
+2014-04-08 21:14:26.226797	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP418
+2014-04-08 21:14:26.230423	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP419
+2014-04-08 21:14:26.233829	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP420
+2014-04-08 21:14:26.23752	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP421
+2014-04-08 21:14:26.240979	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP422
+2014-04-08 21:14:26.244477	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP423
+2014-04-08 21:14:26.249123	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP424
+2014-04-08 21:14:26.252802	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP425
+2014-04-08 21:16:21.450038	admin	127.0.0.1		formsemestre_desinscription	EID7                            	desinscription semestre SEM411
+2014-04-08 21:16:21.488331	admin	127.0.0.1		formsemestre_desinscription	EID4                            	desinscription semestre SEM411
+2014-04-08 21:16:21.530493	admin	127.0.0.1		formsemestre_desinscription	EID10                           	desinscription semestre SEM411
+2014-04-08 21:16:30.464621	admin	127.0.0.1		formsemestre_inscr_passage	EID7                            	inscription en semestre SEM411
+2014-04-08 21:16:30.483468	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP413
+2014-04-08 21:16:30.486796	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP414
+2014-04-08 21:16:30.490219	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP415
+2014-04-08 21:16:30.493965	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP416
+2014-04-08 21:16:30.54661	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP417
+2014-04-08 21:16:30.550279	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP418
+2014-04-08 21:16:30.553644	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP419
+2014-04-08 21:16:30.55691	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP420
+2014-04-08 21:16:30.560131	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP421
+2014-04-08 21:16:30.563746	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP422
+2014-04-08 21:16:30.567669	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP423
+2014-04-08 21:16:30.572329	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP424
+2014-04-08 21:16:30.576626	admin	127.0.0.1		moduleimpl_inscription	EID7                            	inscription module MIP425
+2014-04-08 21:16:30.58401	admin	127.0.0.1		changeGroup	EID7                            	formsemestre_id=SEM411,partition_name=TD, group_name=A
+2014-04-08 21:16:30.589352	admin	127.0.0.1		formsemestre_inscr_passage	EID4                            	inscription en semestre SEM411
+2014-04-08 21:16:30.608204	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP413
+2014-04-08 21:16:30.611992	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP414
+2014-04-08 21:16:30.615501	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP415
+2014-04-08 21:16:30.621009	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP416
+2014-04-08 21:16:30.626526	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP417
+2014-04-08 21:16:30.632161	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP418
+2014-04-08 21:16:30.636232	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP419
+2014-04-08 21:16:30.639808	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP420
+2014-04-08 21:16:30.644283	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP421
+2014-04-08 21:16:30.649261	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP422
+2014-04-08 21:16:30.653063	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP423
+2014-04-08 21:16:30.65865	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP424
+2014-04-08 21:16:30.662034	admin	127.0.0.1		moduleimpl_inscription	EID4                            	inscription module MIP425
+2014-04-08 21:16:30.668892	admin	127.0.0.1		changeGroup	EID4                            	formsemestre_id=SEM411,partition_name=TD, group_name=B
+2014-04-08 21:16:30.675804	admin	127.0.0.1		formsemestre_inscr_passage	EID10                           	inscription en semestre SEM411
+2014-04-08 21:16:30.694747	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP413
+2014-04-08 21:16:30.700035	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP414
+2014-04-08 21:16:30.704597	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP415
+2014-04-08 21:16:30.708786	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP416
+2014-04-08 21:16:30.712578	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP417
+2014-04-08 21:16:30.716	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP418
+2014-04-08 21:16:30.72297	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP419
+2014-04-08 21:16:30.727424	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP420
+2014-04-08 21:16:30.731994	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP421
+2014-04-08 21:16:30.736833	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP422
+2014-04-08 21:16:30.74187	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP423
+2014-04-08 21:16:30.745925	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP424
+2014-04-08 21:16:30.749704	admin	127.0.0.1		moduleimpl_inscription	EID10                           	inscription module MIP425
+2014-04-08 21:16:30.758048	admin	127.0.0.1		changeGroup	EID10                           	formsemestre_id=SEM411,partition_name=TD, group_name=A
+2017-12-05 12:52:31.851694	admin	127.0.0.1		AddAbsence	EID4                            	JOUR=2017-11-13,MATIN=True,ESTJUST=False,description=,moduleimpl_id=
+2017-12-05 12:52:33.875777	admin	127.0.0.1		AddAbsence	EID4                            	JOUR=2017-11-13,MATIN=False,ESTJUST=False,description=,moduleimpl_id=
+2017-12-05 12:52:34.973155	admin	127.0.0.1		AddAbsence	EID4                            	JOUR=2017-11-14,MATIN=True,ESTJUST=False,description=,moduleimpl_id=
+2017-12-05 12:52:36.140102	admin	127.0.0.1		AddAbsence	EID4                            	JOUR=2017-11-15,MATIN=True,ESTJUST=False,description=,moduleimpl_id=
+2017-12-05 12:53:00.864873	admin	127.0.0.1		AddAbsence	EID4                            	JOUR=2017-11-14,MATIN=False,ESTJUST=False,description=,moduleimpl_id=MIP414
+2017-12-05 12:53:01.678994	admin	127.0.0.1		AddAbsence	EID4                            	JOUR=2017-11-15,MATIN=True,ESTJUST=False,description=,moduleimpl_id=MIP414
+2017-12-05 12:53:08.343667	admin	127.0.0.1		AddAbsence	EID4                            	JOUR=2017-11-15,MATIN=False,ESTJUST=False,description=,moduleimpl_id=MIP414
+2018-04-02 21:40:32.519546	admin	127.0.0.1		AddAbsence	EID7                            	JOUR=2017-12-11,MATIN=True,ESTJUST=False,description=,moduleimpl_id=
+2018-04-02 21:40:33.309066	admin	127.0.0.1		AddAbsence	EID10                           	JOUR=2017-12-11,MATIN=True,ESTJUST=False,description=,moduleimpl_id=
+2018-04-02 21:45:22.641858	admin	127.0.0.1		AddAbsence	EID7                            	JOUR=2017-12-04,MATIN=False,ESTJUST=False,description=,moduleimpl_id=
+2018-04-02 21:45:22.85837	admin	127.0.0.1		AnnuleAbsence	EID7                            	JOUR=2017-12-04,MATIN=False,moduleimpl_id=
+2018-04-02 21:45:23.383369	admin	127.0.0.1		AddAbsence	EID10                           	JOUR=2017-12-04,MATIN=False,ESTJUST=False,description=,moduleimpl_id=
+2018-04-02 21:45:23.687841	admin	127.0.0.1		AddAbsence	EID7                            	JOUR=2017-12-04,MATIN=False,ESTJUST=False,description=,moduleimpl_id=
+2018-04-02 21:45:24.188867	admin	127.0.0.1		AddAbsence	EID7                            	JOUR=2017-12-05,MATIN=True,ESTJUST=False,description=,moduleimpl_id=
+2018-04-02 21:45:24.851736	admin	127.0.0.1		AddAbsence	EID10                           	JOUR=2017-12-05,MATIN=True,ESTJUST=False,description=,moduleimpl_id=
+2018-04-02 22:01:35.38791	admin	127.0.0.1		AddAbsence	EID7                            	JOUR=2018-04-09,MATIN=False,ESTJUST=False,description=,moduleimpl_id=
+2018-04-02 22:01:36.114256	admin	127.0.0.1		AddAbsence	EID10                           	JOUR=2018-04-09,MATIN=False,ESTJUST=False,description=,moduleimpl_id=
+2018-04-02 22:01:36.902936	admin	127.0.0.1		AddAbsence	EID7                            	JOUR=2018-04-12,MATIN=False,ESTJUST=False,description=,moduleimpl_id=
+2018-04-02 22:01:37.257773	admin	127.0.0.1		AddAbsence	EID10                           	JOUR=2018-04-12,MATIN=False,ESTJUST=False,description=,moduleimpl_id=
+2018-04-02 22:01:38.097251	admin	127.0.0.1		AddAbsence	EID7                            	JOUR=2018-04-13,MATIN=True,ESTJUST=False,description=,moduleimpl_id=
+2018-04-02 22:01:38.713645	admin	127.0.0.1		AddAbsence	EID10                           	JOUR=2018-04-13,MATIN=True,ESTJUST=False,description=,moduleimpl_id=
+2018-04-02 23:06:15.434627	admin	127.0.0.1		AddAbsence	EID7                            	JOUR=2018-04-11,MATIN=True,ESTJUST=False,description=,moduleimpl_id=
+2018-04-02 23:06:15.852328	admin	127.0.0.1		AddAbsence	EID10                           	JOUR=2018-04-11,MATIN=True,ESTJUST=False,description=,moduleimpl_id=
+2018-04-02 23:06:16.400598	admin	127.0.0.1		AddAbsence	EID10                           	JOUR=2018-04-11,MATIN=False,ESTJUST=False,description=,moduleimpl_id=
+2018-04-02 23:06:16.718823	admin	127.0.0.1		AddAbsence	EID7                            	JOUR=2018-04-11,MATIN=False,ESTJUST=False,description=,moduleimpl_id=
+2018-04-02 23:06:17.212832	admin	127.0.0.1		AddAbsence	EID7                            	JOUR=2018-04-12,MATIN=True,ESTJUST=False,description=,moduleimpl_id=
+2018-04-02 23:06:17.625399	admin	127.0.0.1		AddAbsence	EID10                           	JOUR=2018-04-12,MATIN=True,ESTJUST=False,description=,moduleimpl_id=
+2018-04-02 23:06:18.340934	admin	127.0.0.1		AddAbsence	EID10                           	JOUR=2018-04-10,MATIN=False,ESTJUST=False,description=,moduleimpl_id=
+2018-04-02 23:06:18.669323	admin	127.0.0.1		AddAbsence	EID7                            	JOUR=2018-04-10,MATIN=False,ESTJUST=False,description=,moduleimpl_id=
+2018-04-02 23:06:19.283696	admin	127.0.0.1		AddAbsence	EID7                            	JOUR=2018-04-10,MATIN=True,ESTJUST=False,description=,moduleimpl_id=
+2018-04-02 23:06:19.764076	admin	127.0.0.1		AddAbsence	EID10                           	JOUR=2018-04-10,MATIN=True,ESTJUST=False,description=,moduleimpl_id=
+\.
+
+
+--
+-- Name: serial; Type: SEQUENCE SET; Schema: public; Owner: www-data
+--
+
+SELECT pg_catalog.setval('serial', 1, false);
+
+
+--
+-- Name: abs_absences_pkey; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY abs_absences
+    ADD CONSTRAINT abs_absences_pkey PRIMARY KEY (absid);
+
+
+--
+-- Name: abs_justifs_pkey; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY abs_justifs
+    ADD CONSTRAINT abs_justifs_pkey PRIMARY KEY (absid);
+
+
+--
+-- Name: abs_presences_pkey; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY abs_presences
+    ADD CONSTRAINT abs_presences_pkey PRIMARY KEY (absid);
+
+
+--
+-- Name: group_descr_partition_id_group_name_key; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY group_descr
+    ADD CONSTRAINT group_descr_partition_id_group_name_key UNIQUE (partition_id, group_name);
+
+
+--
+-- Name: group_descr_pkey; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY group_descr
+    ADD CONSTRAINT group_descr_pkey PRIMARY KEY (group_id);
+
+
+--
+-- Name: group_membership_etudid_group_id_key; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY group_membership
+    ADD CONSTRAINT group_membership_etudid_group_id_key UNIQUE (etudid, group_id);
+
+
+--
+-- Name: group_membership_pkey; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY group_membership
+    ADD CONSTRAINT group_membership_pkey PRIMARY KEY (group_membership_id);
+
+
+--
+-- Name: identite_code_ine_key; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY identite
+    ADD CONSTRAINT identite_code_ine_key UNIQUE (code_ine);
+
+
+--
+-- Name: identite_code_nip_key; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY identite
+    ADD CONSTRAINT identite_code_nip_key UNIQUE (code_nip);
+
+
+--
+-- Name: identite_etudid_key; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY identite
+    ADD CONSTRAINT identite_etudid_key UNIQUE (etudid);
+
+
+--
+-- Name: notes_evaluation_pkey; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY notes_evaluation
+    ADD CONSTRAINT notes_evaluation_pkey PRIMARY KEY (evaluation_id);
+
+
+--
+-- Name: notes_form_modalites_pkey; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY notes_form_modalites
+    ADD CONSTRAINT notes_form_modalites_pkey PRIMARY KEY (form_modalite_id);
+
+
+--
+-- Name: notes_formations_acronyme_titre_version_key; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY notes_formations
+    ADD CONSTRAINT notes_formations_acronyme_titre_version_key UNIQUE (acronyme, titre, version);
+
+
+--
+-- Name: notes_formations_pkey; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY notes_formations
+    ADD CONSTRAINT notes_formations_pkey PRIMARY KEY (formation_id);
+
+
+--
+-- Name: notes_formsemestre_custommenu_pkey; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY notes_formsemestre_custommenu
+    ADD CONSTRAINT notes_formsemestre_custommenu_pkey PRIMARY KEY (custommenu_id);
+
+
+--
+-- Name: notes_formsemestre_inscription_formsemestre_id_etudid_key; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY notes_formsemestre_inscription
+    ADD CONSTRAINT notes_formsemestre_inscription_formsemestre_id_etudid_key UNIQUE (formsemestre_id, etudid);
+
+
+--
+-- Name: notes_formsemestre_inscription_pkey; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY notes_formsemestre_inscription
+    ADD CONSTRAINT notes_formsemestre_inscription_pkey PRIMARY KEY (formsemestre_inscription_id);
+
+
+--
+-- Name: notes_formsemestre_pkey; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY notes_formsemestre
+    ADD CONSTRAINT notes_formsemestre_pkey PRIMARY KEY (formsemestre_id);
+
+
+--
+-- Name: notes_formsemestre_ue_computation_exp_formsemestre_id_ue_id_key; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY notes_formsemestre_ue_computation_expr
+    ADD CONSTRAINT notes_formsemestre_ue_computation_exp_formsemestre_id_ue_id_key UNIQUE (formsemestre_id, ue_id);
+
+
+--
+-- Name: notes_formsemestre_ue_computation_expr_pkey; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY notes_formsemestre_ue_computation_expr
+    ADD CONSTRAINT notes_formsemestre_ue_computation_expr_pkey PRIMARY KEY (notes_formsemestre_ue_computation_expr_id);
+
+
+--
+-- Name: notes_formsemestre_uecoef_formsemestre_id_ue_id_key; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY notes_formsemestre_uecoef
+    ADD CONSTRAINT notes_formsemestre_uecoef_formsemestre_id_ue_id_key UNIQUE (formsemestre_id, ue_id);
+
+
+--
+-- Name: notes_formsemestre_uecoef_pkey; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY notes_formsemestre_uecoef
+    ADD CONSTRAINT notes_formsemestre_uecoef_pkey PRIMARY KEY (formsemestre_uecoef_id);
+
+
+--
+-- Name: notes_matieres_pkey; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY notes_matieres
+    ADD CONSTRAINT notes_matieres_pkey PRIMARY KEY (matiere_id);
+
+
+--
+-- Name: notes_matieres_ue_id_titre_key; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY notes_matieres
+    ADD CONSTRAINT notes_matieres_ue_id_titre_key UNIQUE (ue_id, titre);
+
+
+--
+-- Name: notes_moduleimpl_inscription_moduleimpl_id_etudid_key; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY notes_moduleimpl_inscription
+    ADD CONSTRAINT notes_moduleimpl_inscription_moduleimpl_id_etudid_key UNIQUE (moduleimpl_id, etudid);
+
+
+--
+-- Name: notes_moduleimpl_inscription_pkey; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY notes_moduleimpl_inscription
+    ADD CONSTRAINT notes_moduleimpl_inscription_pkey PRIMARY KEY (moduleimpl_inscription_id);
+
+
+--
+-- Name: notes_moduleimpl_module_id_formsemestre_id_key; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY notes_moduleimpl
+    ADD CONSTRAINT notes_moduleimpl_module_id_formsemestre_id_key UNIQUE (module_id, formsemestre_id);
+
+
+--
+-- Name: notes_moduleimpl_pkey; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY notes_moduleimpl
+    ADD CONSTRAINT notes_moduleimpl_pkey PRIMARY KEY (moduleimpl_id);
+
+
+--
+-- Name: notes_modules_enseignants_pkey; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY notes_modules_enseignants
+    ADD CONSTRAINT notes_modules_enseignants_pkey PRIMARY KEY (modules_enseignants_id);
+
+
+--
+-- Name: notes_modules_pkey; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY notes_modules
+    ADD CONSTRAINT notes_modules_pkey PRIMARY KEY (module_id);
+
+
+--
+-- Name: notes_notes_etudid_evaluation_id_key; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY notes_notes
+    ADD CONSTRAINT notes_notes_etudid_evaluation_id_key UNIQUE (etudid, evaluation_id);
+
+
+--
+-- Name: notes_notes_log_pkey; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY notes_notes_log
+    ADD CONSTRAINT notes_notes_log_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: notes_semestres_pkey; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY notes_semestres
+    ADD CONSTRAINT notes_semestres_pkey PRIMARY KEY (semestre_id);
+
+
+--
+-- Name: notes_ue_pkey; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY notes_ue
+    ADD CONSTRAINT notes_ue_pkey PRIMARY KEY (ue_id);
+
+
+--
+-- Name: partition_formsemestre_id_partition_name_key; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY partition
+    ADD CONSTRAINT partition_formsemestre_id_partition_name_key UNIQUE (formsemestre_id, partition_name);
+
+
+--
+-- Name: partition_pkey; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY partition
+    ADD CONSTRAINT partition_pkey PRIMARY KEY (partition_id);
+
+
+--
+-- Name: sco_prefs_name_formsemestre_id_key; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY sco_prefs
+    ADD CONSTRAINT sco_prefs_name_formsemestre_id_key UNIQUE (name, formsemestre_id);
+
+
+--
+-- Name: sco_prefs_pref_id_key; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY sco_prefs
+    ADD CONSTRAINT sco_prefs_pref_id_key UNIQUE (pref_id);
+
+
+--
+-- Name: scolar_autorisation_inscription_pkey; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY scolar_autorisation_inscription
+    ADD CONSTRAINT scolar_autorisation_inscription_pkey PRIMARY KEY (autorisation_inscription_id);
+
+
+--
+-- Name: scolar_events_pkey; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY scolar_events
+    ADD CONSTRAINT scolar_events_pkey PRIMARY KEY (event_id);
+
+
+--
+-- Name: scolar_formsemestre_validation_etudid_formsemestre_id_ue_id_key; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY scolar_formsemestre_validation
+    ADD CONSTRAINT scolar_formsemestre_validation_etudid_formsemestre_id_ue_id_key UNIQUE (etudid, formsemestre_id, ue_id);
+
+
+--
+-- Name: scolar_formsemestre_validation_pkey; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY scolar_formsemestre_validation
+    ADD CONSTRAINT scolar_formsemestre_validation_pkey PRIMARY KEY (formsemestre_validation_id);
+
+
+--
+-- Name: scolar_news_pkey; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY scolar_news
+    ADD CONSTRAINT scolar_news_pkey PRIMARY KEY (news_id);
+
+
+--
+-- Name: group_descr_partition_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY group_descr
+    ADD CONSTRAINT group_descr_partition_id_fkey FOREIGN KEY (partition_id) REFERENCES partition(partition_id);
+
+
+--
+-- Name: group_membership_etudid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY group_membership
+    ADD CONSTRAINT group_membership_etudid_fkey FOREIGN KEY (etudid) REFERENCES identite(etudid);
+
+
+--
+-- Name: group_membership_group_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY group_membership
+    ADD CONSTRAINT group_membership_group_id_fkey FOREIGN KEY (group_id) REFERENCES group_descr(group_id);
+
+
+--
+-- Name: notes_appreciations_etudid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY notes_appreciations
+    ADD CONSTRAINT notes_appreciations_etudid_fkey FOREIGN KEY (etudid) REFERENCES identite(etudid);
+
+
+--
+-- Name: notes_appreciations_formsemestre_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY notes_appreciations
+    ADD CONSTRAINT notes_appreciations_formsemestre_id_fkey FOREIGN KEY (formsemestre_id) REFERENCES notes_formsemestre(formsemestre_id);
+
+
+--
+-- Name: notes_evaluation_moduleimpl_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY notes_evaluation
+    ADD CONSTRAINT notes_evaluation_moduleimpl_id_fkey FOREIGN KEY (moduleimpl_id) REFERENCES notes_moduleimpl(moduleimpl_id);
+
+
+--
+-- Name: notes_formsemestre_custommenu_formsemestre_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY notes_formsemestre_custommenu
+    ADD CONSTRAINT notes_formsemestre_custommenu_formsemestre_id_fkey FOREIGN KEY (formsemestre_id) REFERENCES notes_formsemestre(formsemestre_id);
+
+
+--
+-- Name: notes_formsemestre_formation_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY notes_formsemestre
+    ADD CONSTRAINT notes_formsemestre_formation_id_fkey FOREIGN KEY (formation_id) REFERENCES notes_formations(formation_id);
+
+
+--
+-- Name: notes_formsemestre_inscription_etudid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY notes_formsemestre_inscription
+    ADD CONSTRAINT notes_formsemestre_inscription_etudid_fkey FOREIGN KEY (etudid) REFERENCES identite(etudid);
+
+
+--
+-- Name: notes_formsemestre_inscription_formsemestre_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY notes_formsemestre_inscription
+    ADD CONSTRAINT notes_formsemestre_inscription_formsemestre_id_fkey FOREIGN KEY (formsemestre_id) REFERENCES notes_formsemestre(formsemestre_id);
+
+
+--
+-- Name: notes_formsemestre_semestre_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY notes_formsemestre
+    ADD CONSTRAINT notes_formsemestre_semestre_id_fkey FOREIGN KEY (semestre_id) REFERENCES notes_semestres(semestre_id);
+
+
+--
+-- Name: notes_formsemestre_ue_computation_expr_formsemestre_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY notes_formsemestre_ue_computation_expr
+    ADD CONSTRAINT notes_formsemestre_ue_computation_expr_formsemestre_id_fkey FOREIGN KEY (formsemestre_id) REFERENCES notes_formsemestre(formsemestre_id);
+
+
+--
+-- Name: notes_formsemestre_ue_computation_expr_ue_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY notes_formsemestre_ue_computation_expr
+    ADD CONSTRAINT notes_formsemestre_ue_computation_expr_ue_id_fkey FOREIGN KEY (ue_id) REFERENCES notes_ue(ue_id);
+
+
+--
+-- Name: notes_formsemestre_uecoef_formsemestre_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY notes_formsemestre_uecoef
+    ADD CONSTRAINT notes_formsemestre_uecoef_formsemestre_id_fkey FOREIGN KEY (formsemestre_id) REFERENCES notes_formsemestre(formsemestre_id);
+
+
+--
+-- Name: notes_formsemestre_uecoef_ue_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY notes_formsemestre_uecoef
+    ADD CONSTRAINT notes_formsemestre_uecoef_ue_id_fkey FOREIGN KEY (ue_id) REFERENCES notes_ue(ue_id);
+
+
+--
+-- Name: notes_matieres_ue_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY notes_matieres
+    ADD CONSTRAINT notes_matieres_ue_id_fkey FOREIGN KEY (ue_id) REFERENCES notes_ue(ue_id);
+
+
+--
+-- Name: notes_moduleimpl_formsemestre_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY notes_moduleimpl
+    ADD CONSTRAINT notes_moduleimpl_formsemestre_id_fkey FOREIGN KEY (formsemestre_id) REFERENCES notes_formsemestre(formsemestre_id);
+
+
+--
+-- Name: notes_moduleimpl_inscription_etudid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY notes_moduleimpl_inscription
+    ADD CONSTRAINT notes_moduleimpl_inscription_etudid_fkey FOREIGN KEY (etudid) REFERENCES identite(etudid);
+
+
+--
+-- Name: notes_moduleimpl_inscription_moduleimpl_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY notes_moduleimpl_inscription
+    ADD CONSTRAINT notes_moduleimpl_inscription_moduleimpl_id_fkey FOREIGN KEY (moduleimpl_id) REFERENCES notes_moduleimpl(moduleimpl_id);
+
+
+--
+-- Name: notes_moduleimpl_module_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY notes_moduleimpl
+    ADD CONSTRAINT notes_moduleimpl_module_id_fkey FOREIGN KEY (module_id) REFERENCES notes_modules(module_id);
+
+
+--
+-- Name: notes_modules_enseignants_moduleimpl_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY notes_modules_enseignants
+    ADD CONSTRAINT notes_modules_enseignants_moduleimpl_id_fkey FOREIGN KEY (moduleimpl_id) REFERENCES notes_moduleimpl(moduleimpl_id);
+
+
+--
+-- Name: notes_modules_formation_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY notes_modules
+    ADD CONSTRAINT notes_modules_formation_id_fkey FOREIGN KEY (formation_id) REFERENCES notes_formations(formation_id);
+
+
+--
+-- Name: notes_modules_matiere_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY notes_modules
+    ADD CONSTRAINT notes_modules_matiere_id_fkey FOREIGN KEY (matiere_id) REFERENCES notes_matieres(matiere_id);
+
+
+--
+-- Name: notes_modules_semestre_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY notes_modules
+    ADD CONSTRAINT notes_modules_semestre_id_fkey FOREIGN KEY (semestre_id) REFERENCES notes_semestres(semestre_id);
+
+
+--
+-- Name: notes_modules_ue_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY notes_modules
+    ADD CONSTRAINT notes_modules_ue_id_fkey FOREIGN KEY (ue_id) REFERENCES notes_ue(ue_id);
+
+
+--
+-- Name: notes_notes_etudid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY notes_notes
+    ADD CONSTRAINT notes_notes_etudid_fkey FOREIGN KEY (etudid) REFERENCES identite(etudid);
+
+
+--
+-- Name: notes_notes_evaluation_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY notes_notes
+    ADD CONSTRAINT notes_notes_evaluation_id_fkey FOREIGN KEY (evaluation_id) REFERENCES notes_evaluation(evaluation_id);
+
+
+--
+-- Name: notes_notes_log_etudid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY notes_notes_log
+    ADD CONSTRAINT notes_notes_log_etudid_fkey FOREIGN KEY (etudid) REFERENCES identite(etudid);
+
+
+--
+-- Name: notes_ue_formation_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY notes_ue
+    ADD CONSTRAINT notes_ue_formation_id_fkey FOREIGN KEY (formation_id) REFERENCES notes_formations(formation_id);
+
+
+--
+-- Name: partition_formsemestre_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY partition
+    ADD CONSTRAINT partition_formsemestre_id_fkey FOREIGN KEY (formsemestre_id) REFERENCES notes_formsemestre(formsemestre_id);
+
+
+--
+-- Name: scolar_autorisation_inscription_origin_formsemestre_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY scolar_autorisation_inscription
+    ADD CONSTRAINT scolar_autorisation_inscription_origin_formsemestre_id_fkey FOREIGN KEY (origin_formsemestre_id) REFERENCES notes_formsemestre(formsemestre_id);
+
+
+--
+-- Name: scolar_autorisation_inscription_semestre_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY scolar_autorisation_inscription
+    ADD CONSTRAINT scolar_autorisation_inscription_semestre_id_fkey FOREIGN KEY (semestre_id) REFERENCES notes_semestres(semestre_id);
+
+
+--
+-- Name: scolar_events_comp_formsemestre_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY scolar_events
+    ADD CONSTRAINT scolar_events_comp_formsemestre_id_fkey FOREIGN KEY (comp_formsemestre_id) REFERENCES notes_formsemestre(formsemestre_id);
+
+
+--
+-- Name: scolar_events_formsemestre_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY scolar_events
+    ADD CONSTRAINT scolar_events_formsemestre_id_fkey FOREIGN KEY (formsemestre_id) REFERENCES notes_formsemestre(formsemestre_id);
+
+
+--
+-- Name: scolar_events_ue_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY scolar_events
+    ADD CONSTRAINT scolar_events_ue_id_fkey FOREIGN KEY (ue_id) REFERENCES notes_ue(ue_id);
+
+
+--
+-- Name: scolar_formsemestre_validation_formsemestre_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY scolar_formsemestre_validation
+    ADD CONSTRAINT scolar_formsemestre_validation_formsemestre_id_fkey FOREIGN KEY (formsemestre_id) REFERENCES notes_formsemestre(formsemestre_id);
+
+
+--
+-- Name: scolar_formsemestre_validation_ue_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: www-data
+--
+
+ALTER TABLE ONLY scolar_formsemestre_validation
+    ADD CONSTRAINT scolar_formsemestre_validation_ue_id_fkey FOREIGN KEY (ue_id) REFERENCES notes_ue(ue_id);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\connect "SCOUSERS"
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+--
+-- Name: sco_users_newid(text); Type: FUNCTION; Schema: public; Owner: www-data
+--
+
+CREATE FUNCTION sco_users_newid(text) RETURNS text
+    LANGUAGE sql
+    AS $_$
+	select $1 || to_char(  nextval('sco_users_idgen'), 'FM999999999' ) 
+	as result;
+	$_$;
+
+
+ALTER FUNCTION public.sco_users_newid(text) OWNER TO "www-data";
+
+SET default_tablespace = '';
+
+SET default_with_oids = true;
+
+--
+-- Name: sco_users; Type: TABLE; Schema: public; Owner: www-data; Tablespace: 
+--
+
+CREATE TABLE sco_users (
+    user_id text DEFAULT sco_users_newid('U'::text) NOT NULL,
+    user_name text,
+    passwd text NOT NULL,
+    roles text,
+    date_modif_passwd date DEFAULT now(),
+    nom text,
+    prenom text,
+    email text,
+    dept text,
+    passwd_temp integer DEFAULT 0,
+    status text,
+    date_expiration date,
+    login_edt text
+);
+
+
+ALTER TABLE public.sco_users OWNER TO "www-data";
+
+--
+-- Name: sco_users_idgen; Type: SEQUENCE; Schema: public; Owner: www-data
+--
+
+CREATE SEQUENCE sco_users_idgen
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sco_users_idgen OWNER TO "www-data";
+
+--
+-- Data for Name: sco_users; Type: TABLE DATA; Schema: public; Owner: www-data
+--
+
+COPY sco_users (user_id, user_name, passwd, roles, date_modif_passwd, nom, prenom, email, dept, passwd_temp, status, date_expiration, login_edt) FROM stdin;
+U1	demo	RNl3ERdTZUSsWMowYMacTA==	AdminGEII	2014-04-08	DEMO	Scodoc	\N	GEII	0	\N	\N	\N
+\.
+
+
+--
+-- Name: sco_users_idgen; Type: SEQUENCE SET; Schema: public; Owner: www-data
+--
+
+SELECT pg_catalog.setval('sco_users_idgen', 1, true);
+
+
+--
+-- Name: sco_users_pkey; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY sco_users
+    ADD CONSTRAINT sco_users_pkey PRIMARY KEY (user_id);
+
+
+--
+-- Name: sco_users_user_name_key; Type: CONSTRAINT; Schema: public; Owner: www-data; Tablespace: 
+--
+
+ALTER TABLE ONLY sco_users
+    ADD CONSTRAINT sco_users_user_name_key UNIQUE (user_name);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\connect zenetude_base
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: postgres; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON DATABASE postgres IS 'default administrative connection database';
+
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\connect template1
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: template1; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON DATABASE template1 IS 'default template database';
+
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+--
+-- PostgreSQL database cluster dump complete
+--
+
